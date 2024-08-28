@@ -1,0 +1,49 @@
+.content-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.breadcrumb {
+  background: none;
+  padding: 0;
+  margin-bottom: 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: grey;
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+
+.breadcrumb-item a {
+  text-decoration: none;
+  color: grey;
+  transition: color 0.3s ease;
+}
+
+.breadcrumb-item.active {
+  color: grey;
+}
+
+.breadcrumb-item a:hover {
+  color: #084149;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: "/";
+  padding: 0 8px;
+  color: grey;
+}
+
+.page-title {
+  font-size: 2rem;
+  color: #084149;
+  margin-bottom: 10px;
+}
+
+.page-description {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.6;
+}

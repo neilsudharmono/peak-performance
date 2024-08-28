@@ -1,0 +1,162 @@
+.footer {
+  background-color: white;
+  color: #1a1919;
+  padding: 40px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-top: 1px solid #e0e0e0;
+}
+
+.footer-container {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.footer-logo {
+  height: 70px;
+}
+
+.footer-flag {
+  height: 40px;
+}
+
+.footer-right {
+  align-items: center;
+}
+
+.footer-row {
+  width: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 0 20px;
+}
+
+.footer-column {
+  flex: 1;
+  margin: 0 20px;
+  min-width: 200px;
+}
+
+.footer-column p a {
+  text-decoration: none;
+  color: #1a1919;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+#column-header {
+  color: #1a1919;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-column ul li {
+  margin-bottom: 10px;
+  font-size: 12px;
+}
+
+.footer-column ul li a {
+  text-decoration: none;
+  color: #1a1919;
+  font-size: 12px;
+}
+
+.footer-column.footer-right {
+  flex: 3;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer-column.footer-right div {
+  display: flex;
+  align-items: center;
+}
+
+.footer-column.footer-right img {
+  margin-bottom: 0;
+  margin-left: 10px;
+}
+
+.footer-bottom {
+  margin-top: 20px;
+  text-align: left;
+  color: #1a1919;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.footer-bottom-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.social-links {
+  margin: 0;
+}
+
+.social-links ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.social-links ul li {
+  margin: 0 10px;
+}
+
+.social-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.collapsible-content {
+  display: block;
+  padding-left: 20px;
+}
+
+.arrow-icon {
+  display: none;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .arrow-icon {
+    display: inline-block;
+    float: right;
+  }
+
+  .collapsible-content {
+    display: none;
+  }
+
+  .collapsible-header.active .arrow-icon {
+    transform: rotate(180deg);
+  }
+
+  .collapsible-content.active {
+    display: block;
+  }
+}
