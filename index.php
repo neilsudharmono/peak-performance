@@ -1,3 +1,11 @@
+<?php
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -5,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Peak Performance Sports Club</title>
     <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
-    <link rel="stylesheet" href="css/header.css" />
+    <link rel="stylesheet" href="css/header.css?v=1.0" />
     <link rel="stylesheet" href="css/footer.css" />
     <link rel="stylesheet" href="css/hero-banner.css" />
     <link rel="stylesheet" href="css/horizontal-scroll.css" />
@@ -14,7 +22,7 @@
   </head>
   <body>
     <!-- Header -->
-    <?php include 'header.php'; ?>
+    <?php include "header.php"; ?>
 
     <main>
       <!-- Hero Banner -->
@@ -144,7 +152,7 @@
       </section>
 
     </main>
-    <?php include 'footer.php'; ?>
+    <?php include "footer.php"; ?>
   </body>
 
   <script src="scripts/script.js"></script>

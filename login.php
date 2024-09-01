@@ -1,8 +1,75 @@
+<?php
+// Set the session cookie lifetime (time before the browser deletes the session cookie)
+ini_set("session.cookie_lifetime", 3600); // 1 hour
+
+// Set the maximum time in seconds before a session expires if not used
+ini_set("session.gc_maxlifetime", 3600); // 1 hour
+
+session_start(); // Start the session
+
+// Database connection settings
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "peakperformance";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get the form data
+    $email = htmlspecialchars(trim($_POST["email"]));
+    $password = htmlspecialchars(trim($_POST["password"]));
+
+    // Prepare the SQL statement to prevent SQL injection
+    $sql =
+        "SELECT UserID, FirstName, LastName, PasswordHash FROM Users WHERE Email = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
+
+    // Check if the user exists
+    if ($stmt->num_rows > 0) {
+        $stmt->bind_result($userID, $firstName, $lastName, $passwordHash);
+        $stmt->fetch();
+
+        // Verify the password
+        if (password_verify($password, $passwordHash)) {
+            // Password is correct, set session variables
+            $_SESSION["user_id"] = $userID;
+            $_SESSION["first_name"] = $firstName;
+            $_SESSION["last_name"] = $lastName;
+            $_SESSION["email"] = $email; // Store the email in the session
+
+            // Redirect to a dashboard or homepage
+            header("Location: index.php");
+            exit();
+        } else {
+            // Password is incorrect
+            echo "<script>alert('Incorrect password. Please try again.');</script>";
+        }
+    } else {
+        // User not found
+        echo "<script>alert('No user found with that email. Please try again.');</script>";
+    }
+
+    // Close the statement and connection
+    $stmt->close();
+    $conn->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | Peak Performance Sports Club</title>
     <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
     <link rel="stylesheet" href="css/header.css" />
@@ -22,16 +89,16 @@
         position: relative;
       }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <!-- Header -->
-    <?php include 'header.php'; ?>
+    <?php include "header.php"; ?>
 
     <main class="login-container" role="main">
       <form
         class="login-form"
         id="login-form"
-        action="your-login-handler.php"
+        action=""
         method="POST"
         novalidate
       >
