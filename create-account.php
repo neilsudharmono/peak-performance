@@ -1,3 +1,65 @@
+<?php
+// DB connection setting
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "peakperformance";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $firstName = htmlspecialchars(trim($_POST["first-name"]));
+    $lastName = htmlspecialchars(trim($_POST["last-name"]));
+    $email = htmlspecialchars(trim($_POST["email"]));
+    $password = htmlspecialchars(trim($_POST["password"]));
+    $retypePassword = htmlspecialchars(trim($_POST["retype-password"]));
+    $phone = htmlspecialchars(trim($_POST["phone"]));
+
+    // Password check
+    if ($password !== $retypePassword) {
+        // I will add some code soooooon
+    } else {
+        // HashedPassword
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        // SQL
+        $sql = "INSERT INTO Users (FirstName, LastName, Email, PhoneNumber, RoleID, PasswordHash)
+            VALUES (?, ?, ?, ?, 1, ?)";
+
+        // SQL execute
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param(
+            "sssss",
+            $firstName,
+            $lastName,
+            $email,
+            $phone,
+            $hashedPassword
+        );
+
+        if ($stmt->execute()) {
+            // if success, show alert and shift to login.php
+            echo "<script>
+              alert('Registration successful');
+              window.location.href='login.php';
+          </script>";
+        } else {
+            // if fail, show alert
+            echo "<script>alert('Registration not working. Please try again');</script>";
+        }
+
+        // close connection
+        $stmt->close();
+    }
+    $conn->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -25,7 +87,7 @@
   </head>
   <body>
     <!-- Header -->
-    <?php include 'header.php'; ?>
+    <?php include "header.php"; ?>
 
     <main class="login-container">
       <form
@@ -110,24 +172,12 @@
           />
           <span id="phone-error" class="error-message"></span>
         </div>
-        <div class="form-group">
-          <label for="dob">Date of Birth</label>
-          <input
-            type="date"
-            id="dob"
-            name="dob"
-            required
-            aria-required="true"
-            aria-describedby="dob-error"
-          />
-          <span id="dob-error" class="error-message"></span>
-        </div>
         <button type="submit">Sign Up</button>
         <a href="login.php" class="back-to-login-link">Back to Login</a>
       </form>
     </main>
 
-    <?php include 'footer.php'; ?>
+    <?php include "footer.php"; ?>
 
   </body>
   <script src="scripts/script.js"></script>
