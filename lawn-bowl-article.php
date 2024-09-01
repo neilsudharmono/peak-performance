@@ -1,10 +1,8 @@
 <?php
 include 'db/load_facilities.php'; // Include the file containing the function
-
-// Assuming you have a database connection established
-// $pdo should be your PDO connection object
-
 $facilities = loadFacilities($pdo, 'Lawn Bowl'); // Load Lawn Bowl facilities
+$today = date('Y-m-d', strtotime('+1 day')); // Calculate today + 1
+require('db/retrieve_user.php');
 ?>
 
 <!DOCTYPE html>
@@ -158,11 +156,11 @@ $facilities = loadFacilities($pdo, 'Lawn Bowl'); // Load Lawn Bowl facilities
       </section>
 
       <section class="booking-form">
-        <h2>Book your Lawn Bowl session</h2>
+        <h2>Book our Tennis Court</h2>
         <form action="db/booking_process.php" method="post" id="tennis-booking-form" novalidate>
         <div class="form-group">
-            <label for="facility">Choose a Lawn Bowl Field:</label>
-            <select name="facility" id="facility">
+            <label for="facility">Choose a Tennis Court:</label>
+            <select name="facility" id="facility" onchange="fetchAvailableTimeSlots()">
                 <?php foreach ($facilities as $facility): ?>
                     <option value="<?= $facility['FacilityID'] ?>"><?= $facility['FacilityName'] ?></option>
                 <?php endforeach; ?>
@@ -170,17 +168,17 @@ $facilities = loadFacilities($pdo, 'Lawn Bowl'); // Load Lawn Bowl facilities
         </div>
           <div class="form-group">
             <label for="first-name">First Name *</label>
-            <input type="text" id="first-name" name="first-name" required />
+            <input type="text" id="first-name" name="first-name" value="<?php echo $firstName; ?>" disabled required />
             <span id="first-name-error" class="error-message"></span>
           </div>
           <div class="form-group">
             <label for="last-name">Last Name *</label>
-            <input type="text" id="last-name" name="last-name" required />
+            <input type="text" id="last-name" name="last-name" value="<?php echo $lastName; ?>" disabled required />
             <span id="last-name-error" class="error-message"></span>
           </div>
           <div class="form-group">
             <label for="email">Email *</label>
-            <input type="email" id="email" name="email" required />
+            <input type="email" id="email" name="email" value="<?php echo $email; ?>" disabled required />
             <span id="email-error" class="error-message"></span>
           </div>
           <div class="form-group">
@@ -190,34 +188,42 @@ $facilities = loadFacilities($pdo, 'Lawn Bowl'); // Load Lawn Bowl facilities
               id="phone"
               name="phone"
               required
+              disabled
               pattern="^\d{10}$"
+              value="<?php echo $phone; ?>"
             />
             <span id="phone-error" class="error-message"></span>
           </div>
           <div class="form-group">
             <label for="booking-date">Booking Date *</label>
-            <input type="date" id="booking-date" name="booking-date" required />
+            <input type="date" id="booking-date" name="booking-date" value="<?php echo $today; ?>" onchange="fetchAvailableTimeSlots()" required />
             <span id="booking-date-error" class="error-message"></span>
           </div>
-          <div class="form-group">
-            <label for="time-from">Time From *</label>
-            <input type="time" id="time-from" name="time-from" required />
-            <span id="time-from-error" class="error-message"></span>
-          </div>
-          <div class="form-group">
-            <label for="time-to">Time To *</label>
-            <input type="time" id="time-to" name="time-to" required />
-            <span id="time-to-error" class="error-message"></span>
+          <div class="form-group" id="time-duration-group">
+
+             <label for="time-duration">Time Duration</label>
+             <select id="time-duration" name="time-duration">
+                    <!-- Options will be dynamically populated via JavaScript -->
+              </select>
+             <span class="error-message" id="time-duration-error"></span>
           </div>
           <div class="form-group">
             <label for="note">Note</label>
             <input type="text" id="note" name="note" />
           </div>
-          <button type="submit">Submit</button>
-          <?php if (isset($_GET['bookingSuccess']) && $_GET['bookingSuccess'] == TRUE): ?>
+          <button type="submit">Book Now</button>
+
+          <?php if (isset($_GET['bookingSuccess']) && $_GET['bookingSuccess'] == 'TRUE'): ?>
             <br>
             <div id="success-message" class="success-message">Your booking has been successfully submitted!</div>
         <?php endif; ?>
+
+        <?php if (isset($_GET['bookingSuccess']) && $_GET['bookingSuccess'] == 'FALSE'): ?>
+            <br>
+            <div id="success-message" class="success-message">Your booking has not been successful! Please try again</div>
+        <?php endif; ?>
+
+
         </form>
       </section>
     </main>

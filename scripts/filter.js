@@ -79,24 +79,54 @@ document.addEventListener("DOMContentLoaded", function () {
     const start = (currentPage - 1) * eventsPerPage;
     const end = start + eventsPerPage;
     const eventsToShow = filteredEvents.slice(start, end);
+    console.log(eventsToShow);
 
-    eventsToShow.forEach((event) => {
-      const eventTile = document.createElement("div");
-      eventTile.classList.add("filtered-event-tile");
-      eventTile.innerHTML = `
-                <div class="category-tag">${event.category}</div>
-                <img src="${event.imgSrc}" alt="${event.title}" />
-                <div class="filtered-event-info">
-                    <h4 class="event-date">${new Date(
-                      event.date
-                    ).toLocaleDateString()}</h4>
-                    <h3 class="event-title">${event.title}</h3>
-                    <p>${event.description}</p>
-                    <a href="#" class="event-cta">Learn More</a>
-                </div>
-            `;
-      container.appendChild(eventTile);
+    const promises = eventsToShow.map((event) => {
+      return checkUserRegistration(event.eventID).then((userRegistered) => {
+        const eventTile = document.createElement("div");
+        eventTile.classList.add("filtered-event-tile");
+
+        eventTile.innerHTML = `
+            <div class="category-tag">${event.category}</div>
+            <img src="${event.imgSrc}" alt="${event.title}" />
+            <div class="filtered-event-info">
+                <h4 class="event-date">${new Date(
+                  event.date
+                ).toLocaleDateString()}</h4>
+                <h3 class="event-title">${event.title}</h3>
+                <p>${event.description}</p>
+                <a href="#" class="event-cta ${
+                  userRegistered ? "disabled" : ""
+                }" data-event-id="${event.eventID}">
+                    ${
+                      userRegistered
+                        ? "Already Registered"
+                        : "Register to Event"
+                    }
+                </a>
+            </div>
+        `;
+        return eventTile;
+      });
     });
+
+    Promise.all(promises).then((eventTiles) => {
+      eventTiles.forEach((eventTile) => {
+        container.appendChild(eventTile);
+      });
+    });
+    setTimeout(() => {
+      document.querySelectorAll(".event-cta").forEach((button) => {
+        button.addEventListener("click", function (e) {
+          e.preventDefault();
+          const eventID = this.getAttribute("data-event-id");
+
+          if (!this.classList.contains("disabled")) {
+            registerEvent(eventID);
+          }
+        });
+      });
+    }, 500); // Adjust timeout as needed based on the async call timing
   }
 
   function renderPagination() {
@@ -201,4 +231,100 @@ function createArrowButton(id, imgSrc, isDisabled, onClick) {
   button.addEventListener("click", onClick);
 
   return button;
+}
+
+function registerEvent(eventID) {
+  console.log("Registering event with ID:", eventID); // Debugging log
+
+  const userID = 1; // Replace this with your method to get the logged-in user ID
+  fetch("db/register_event.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ eventID, userID }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Response from server:", data); // Debugging log
+
+      if (data.success) {
+        showModal("Successfully registered for the event!");
+
+        // Find the button that was clicked using eventID
+        const button = document.querySelector(
+          `.event-cta[data-event-id="${eventID}"]`
+        );
+        if (button) {
+          button.textContent = "Already Registered"; // Change button text
+          button.classList.add("disabled"); // Add disabled class
+          button.style.backgroundColor = "#cccccc"; // Optional: Change button color
+          button.style.color = "#666666"; // Optional: Change button text color
+          button.style.cursor = "not-allowed"; // Optional: Change cursor
+          button.removeEventListener("click", registerEventHandler); // Remove click event handler to prevent further clicks
+        }
+      } else {
+        alert("Failed to register for the event. Please try again.");
+      }
+    })
+    .catch((error) => console.error("Error:", error));
+}
+
+function checkUserRegistration(eventID) {
+  const userID = 1; // Replace with function to get the logged-in user ID
+
+  // URL to your PHP script that checks registration status
+  const url = "db/check_event_registration.php";
+
+  // Return a promise to handle asynchronous operation
+  return fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ eventID, userID }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        return data.isRegistered; // This should be true or false based on registration status
+      } else {
+        console.error("Error checking registration status:", data.message);
+        return false;
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      return false;
+    });
+}
+
+function registerEventHandler(e) {
+  e.preventDefault();
+  const eventID = this.getAttribute("data-event-id");
+  if (!this.classList.contains("disabled")) {
+    registerEvent(eventID);
+  }
+}
+
+function showModal(message) {
+  const modal = document.getElementById("successModal");
+  const modalMessage = document.getElementById("modal-message");
+  modalMessage.textContent = message; // Set the modal message
+  modal.style.display = "block"; // Show the modal
+
+  // Close modal when clicking the close button or OK button
+  document.querySelector(".close-button").onclick = function () {
+    modal.style.display = "none";
+  };
+  document.getElementById("okButton").onclick = function () {
+    modal.style.display = "none";
+  };
+
+  // Close modal when clicking outside the modal content
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
 }

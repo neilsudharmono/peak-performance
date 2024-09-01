@@ -2,11 +2,13 @@
 require("db_connection.php");
 try {
     // Query to fetch events
-    $stmt = $pdo->prepare("SELECT e.EventID as eventID, e.EventName as title, e.EventDate as date, e.Description as description, 
+    $stmt = $pdo->prepare("SELECT er.RegistrationID as registrationID, e.EventID as eventID, e.EventName as title, e.EventDate as date, e.Description as description, 
                                   ec.CategoryName as category, e.ImageURL as imgSrc
                            FROM Events e
                            JOIN EventCategories ec ON e.CategoryID = ec.CategoryID
-                           WHERE e.EventStatus = 'Scheduled'
+                           JOIN EventRegistrations er ON e.EventID = er.EventID
+                           WHERE e.EventStatus = 'Scheduled' AND
+                           er.UserID = 1
                            ORDER BY e.EventDate ASC");
     $stmt->execute();
 

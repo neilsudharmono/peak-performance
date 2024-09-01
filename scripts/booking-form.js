@@ -11,8 +11,7 @@ document
       },
       { id: "phone", name: "Phone Number", pattern: /^\d{10}$/ },
       { id: "booking-date", name: "Booking Date" },
-      { id: "time-from", name: "Time From" },
-      { id: "time-to", name: "Time To" },
+      { id: "time-duration", name: "Time Duration" },
     ];
 
     let isValid = true;
@@ -40,8 +39,6 @@ document
     });
 
     const bookingDate = document.getElementById("booking-date").value;
-    const timeFrom = document.getElementById("time-from").value;
-    const timeTo = document.getElementById("time-to").value;
 
     const today = new Date().toISOString().split("T")[0];
     if (bookingDate < today) {
@@ -50,13 +47,27 @@ document
       isValid = false;
     }
 
-    if (timeTo <= timeFrom) {
-      document.getElementById("time-to-error").textContent =
-        "'Time To' must be greater than 'Time From'.";
-      isValid = false;
-    }
-
     if (!isValid) {
       event.preventDefault();
     }
   });
+
+document.addEventListener("DOMContentLoaded", function () {
+  fetchAvailableTimeSlots();
+});
+function fetchAvailableTimeSlots() {
+  const facilityId = document.getElementById("facility").value;
+  const bookingDate = document.getElementById("booking-date").value;
+
+  if (facilityId && bookingDate) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "db/load_time_availability.php", true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onload = function () {
+      if (this.status == 200) {
+        document.getElementById("time-duration").innerHTML = this.responseText;
+      }
+    };
+    xhr.send("facilityId=" + facilityId + "&bookingDate=" + bookingDate);
+  }
+}

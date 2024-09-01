@@ -107,6 +107,14 @@
       </section>
     </main>
 
+    <div id="successModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button">&times;</span>
+    <p id="modal-message">Successfully registered for the event!</p>
+    <button id="okButton" class="modal-button">OK</button>
+  </div>
+  </div>  
+
     <?php include 'footer.php'; ?>
 
   </body>

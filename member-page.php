@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="css/image-header-no-title.css" />
     <link rel="stylesheet" href="css/page-info.css" />
     <link rel="stylesheet" href="css/member-page.css" />
+    <link rel="stylesheet" href="css/filtering.css" />
+
     <style>
       header {
         background-color: #084149; 
@@ -49,10 +51,10 @@
         <aside class="filter-section">
           <h3>Category</h3>
           <div class="categories">
-            <button class="filter-button active" data-category="ALL">
+            <button class="filter-button active" data-category="EVENTS">
               YOUR EVENTS
             </button>
-            <button class="filter-button" data-category="Tennis">YOUR BOOKINGS</button>
+            <button class="filter-button" data-category="BOOKINGS">YOUR BOOKINGS</button>
 
           </div>
 
@@ -84,9 +86,17 @@
       </section>
     </main>
 
+    <div id="successModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button">&times;</span>
+    <p id="modal-message">Successfully registered for the event!</p>
+    <button id="okButton" class="modal-button">OK</button>
+  </div>
+  </div>  
+
     <?php include 'footer.php'; ?>
 
   </body>
   <script src="scripts/script.js"></script>
-  <script src="scripts/member-page.js"></script>
+  <script src="scripts/member-event-list.js"></script>
 </html>
