@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
             ).toLocaleDateString()}</h4>
             <h3 class="event-title">${event.title}</h3>
             <p>${event.description}</p>
-            <a href="#" class="event-cta">Register to Event</a>
+            <a href="latest-events.php" class="event-cta">Register to Event</a>
 
           </div>
         `;

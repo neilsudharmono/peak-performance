@@ -1,5 +1,6 @@
 <?php
 require("db_connection.php");
+session_start();
 try {
     // Get today's date
     $today = date('Y-m-d');
@@ -22,14 +23,14 @@ try {
         JOIN 
             TimeDurations t ON t.TimeDurationID = b.TimeDurationID 
         WHERE 
-            b.UserID = 1 AND b.BookingDate >= :today 
+            b.userID = :userID AND b.BookingDate >= :today 
         ORDER BY 
             b.BookingDate, t.TimeDuration ASC
     ");
     
     // Bind the :today parameter to the current date
-    $stmt->bindParam(':today', $today);
-    
+    $stmt->bindParam(':today', $today); 
+    $stmt->bindParam(':userID', $_SESSION['user_id']);
     // Execute the statement
     $stmt->execute();
 

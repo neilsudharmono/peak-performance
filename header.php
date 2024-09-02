@@ -3,15 +3,20 @@ header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
-session_start();
+if(!isset($_SESSION)) 
+{ 
+    session_start(); 
+}
 
 // Check if the user is logged in
 $isLoggedIn = false;
 $firstName = "";
+$userID = "";
 
 if (isset($_SESSION["first_name"])) {
     $isLoggedIn = true;
     $firstName = $_SESSION["first_name"];
+    $userID = $_SESSION["user_id"];
 }
 ?>
 
@@ -39,15 +44,15 @@ if (isset($_SESSION["first_name"])) {
       <ul>
         <li><a href="latest-events.php">Our events</a></li>
         <li><a href="tennis-article.php">Tennis</a></li>
-        <li><a href="lawn-bowl-article.php">Bowl</a></li>
+        <li><a href="lawn-bowl-article.php">Lawn Bowl</a></li>
         <li><a href="function-article.php">Function</a></li>
       </ul>
 
      <div class="header-desktop-button">
        <?php if ($isLoggedIn): ?>
-          <span class="welcome-message">Welcome, <?php echo htmlspecialchars(
+          <span class="welcome-message"><a style="color:#bafb67" href="member-page.php">Welcome, <?php echo htmlspecialchars(
               $firstName
-          ); ?>!</span>
+          ); ?>!</a></span>
           <a href="logout.php"><button>Logout</button></a>
         <?php else: ?>
           <a href="login.php"><button>Sign up / Login</button></a>

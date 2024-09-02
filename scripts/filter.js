@@ -234,15 +234,12 @@ function createArrowButton(id, imgSrc, isDisabled, onClick) {
 }
 
 function registerEvent(eventID) {
-  console.log("Registering event with ID:", eventID); // Debugging log
-
-  const userID = 1; // Replace this with your method to get the logged-in user ID
   fetch("db/register_event.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ eventID, userID }),
+    body: JSON.stringify({ eventID }),
   })
     .then((response) => response.json())
     .then((data) => {
@@ -271,8 +268,6 @@ function registerEvent(eventID) {
 }
 
 function checkUserRegistration(eventID) {
-  const userID = 1; // Replace with function to get the logged-in user ID
-
   // URL to your PHP script that checks registration status
   const url = "db/check_event_registration.php";
 
@@ -282,7 +277,7 @@ function checkUserRegistration(eventID) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ eventID, userID }),
+    body: JSON.stringify({ eventID }),
   })
     .then((response) => response.json())
     .then((data) => {

@@ -2,7 +2,7 @@
 // DB connection setting
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = "root";
 $dbname = "peakperformance";
 
 $conn = new mysqli($servername, $username, $password, $dbname);

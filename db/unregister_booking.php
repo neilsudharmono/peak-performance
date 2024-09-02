@@ -1,6 +1,7 @@
 <?php
 
 require("db_connection.php");
+session_start();
 
 $input = json_decode(file_get_contents('php://input'), true);
 try {

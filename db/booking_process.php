@@ -1,10 +1,12 @@
 <?php
 include 'load_facilities.php'; 
+session_start();
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $facilityID = filter_input(INPUT_POST, 'facility', FILTER_SANITIZE_NUMBER_INT);
-    $userID = 1; 
+    $userID = $_SESSION['user_id']; 
     $bookingDate = filter_input(INPUT_POST, 'booking-date');
     $timeDur = filter_input(INPUT_POST, 'time-duration', FILTER_SANITIZE_NUMBER_INT);
     $note = filter_input(INPUT_POST, 'note');

@@ -1,14 +1,13 @@
 <?php
-
 require("db_connection.php");
-
+session_start();
 $input = json_decode(file_get_contents('php://input'), true);
 try {
 
     // Check if eventID and userID are set
-if (isset($input['eventID']) && isset($input['userID'])) {
+if (isset($input['eventID']) && isset($_SESSION["user_id"])) {
     $eventID = $input['eventID'];
-    $userID = $input['userID'];
+    $userID = $_SESSION["user_id"];
 
     $stmt = $pdo->prepare("INSERT INTO EventRegistrations (EventID, UserID, RegistrationDate) VALUES (:eventID, :userID, NOW())" );
     $stmt->bindParam(':eventID', $eventID,PDO::PARAM_INT); 

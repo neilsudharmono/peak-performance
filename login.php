@@ -10,7 +10,7 @@ session_start(); // Start the session
 // Database connection settings
 $servername = "localhost";
 $username = "root";
-$password = "";
+$password = "root";
 $dbname = "peakperformance";
 
 // Create connection
@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["email"] = $email; // Store the email in the session
 
             // Redirect to a dashboard or homepage
-            header("Location: index.php");
+            header("Location: member-page.php");
             exit();
         } else {
             // Password is incorrect

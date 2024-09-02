@@ -1,14 +1,14 @@
 <?php
 
 header('Content-Type: application/json');
-
+session_start();
 require('db_connection.php');
 
 $input = json_decode(file_get_contents('php://input'), true);
 
-if (isset($input['eventID']) && isset($input['userID'])) {
+if (isset($input['eventID']) && isset($_SESSION["user_id"])) {
     $eventID = $input['eventID'];
-    $userID = $input['userID'];
+    $userID = $_SESSION["user_id"];
 
     // Query to check if the user is already registered
     $query = "SELECT COUNT(*) as count FROM EventRegistrations WHERE EventID = ? AND UserID = ?";
