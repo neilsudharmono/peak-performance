@@ -79,54 +79,82 @@ document.addEventListener("DOMContentLoaded", function () {
     const start = (currentPage - 1) * eventsPerPage;
     const end = start + eventsPerPage;
     const eventsToShow = filteredEvents.slice(start, end);
-    console.log(eventsToShow);
 
-    const promises = eventsToShow.map((event) => {
-      return checkUserRegistration(event.eventID).then((userRegistered) => {
-        const eventTile = document.createElement("div");
-        eventTile.classList.add("filtered-event-tile");
+    checkUserSession().then((isLoggedIn) => {
+      const promises = eventsToShow.map((event) => {
+        return checkUserRegistration(event.eventID).then((userRegistered) => {
+          const eventTile = document.createElement("div");
+          eventTile.classList.add("filtered-event-tile");
 
-        eventTile.innerHTML = `
-            <div class="category-tag">${event.category}</div>
-            <img src="${event.imgSrc}" alt="${event.title}" />
-            <div class="filtered-event-info">
-                <h4 class="event-date">${new Date(
-                  event.date
-                ).toLocaleDateString()}</h4>
-                <h3 class="event-title">${event.title}</h3>
-                <p>${event.description}</p>
-                <a href="#" class="event-cta ${
-                  userRegistered ? "disabled" : ""
-                }" data-event-id="${event.eventID}">
-                    ${
-                      userRegistered
-                        ? "Already Registered"
-                        : "Register to Event"
-                    }
-                </a>
-            </div>
-        `;
-        return eventTile;
-      });
-    });
-
-    Promise.all(promises).then((eventTiles) => {
-      eventTiles.forEach((eventTile) => {
-        container.appendChild(eventTile);
-      });
-    });
-    setTimeout(() => {
-      document.querySelectorAll(".event-cta").forEach((button) => {
-        button.addEventListener("click", function (e) {
-          e.preventDefault();
-          const eventID = this.getAttribute("data-event-id");
-
-          if (!this.classList.contains("disabled")) {
-            registerEvent(eventID);
-          }
+          eventTile.innerHTML = `
+              <div class="category-tag">${event.category}</div>
+              <img src="${event.imgSrc}" alt="${event.title}" />
+              <div class="filtered-event-info">
+                  <h4 class="event-date">${new Date(
+                    event.date
+                  ).toLocaleDateString()}</h4>
+                  <h3 class="event-title">${event.title}</h3>
+                  <p>${event.description}</p>
+                  <a href="${
+                    isLoggedIn ? "#" : "login.php"
+                  }" class="event-cta ${
+            userRegistered ? "disabled" : ""
+          }" data-event-id="${event.eventID}">
+                      ${
+                        userRegistered
+                          ? "Already Registered"
+                          : isLoggedIn
+                          ? "Register to Event"
+                          : "Login to Register"
+                      }
+                  </a>
+              </div>
+          `;
+          return eventTile;
         });
       });
-    }, 500); // Adjust timeout as needed based on the async call timing
+
+      Promise.all(promises).then((eventTiles) => {
+        eventTiles.forEach((eventTile) => {
+          container.appendChild(eventTile);
+        });
+      });
+
+      setTimeout(() => {
+        document.querySelectorAll(".event-cta").forEach((button) => {
+          button.addEventListener("click", function (e) {
+            if (!isLoggedIn) {
+              // Redirect to login if not logged in
+              window.location.href = "login.php";
+            } else {
+              e.preventDefault();
+              const eventID = this.getAttribute("data-event-id");
+
+              if (!this.classList.contains("disabled")) {
+                registerEvent(eventID);
+              }
+            }
+          });
+        });
+      }, 500);
+    });
+  }
+
+  function checkUserSession() {
+    return fetch("db/check_user_session_event.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        return data.isLoggedIn; // This should return true if the user is logged in
+      })
+      .catch((error) => {
+        console.error("Error checking user session:", error);
+        return false;
+      });
   }
 
   function renderPagination() {

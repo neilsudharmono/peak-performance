@@ -2,6 +2,9 @@
 // Include your database connection
 require("db_connection.php");
 session_start();
+
+if (isset($_SESSION['user_id'])) {
+
 // Define UserID
 $userID = $_SESSION['user_id'];
 
@@ -17,8 +20,9 @@ if ($user) {
     $lastName = $user['LastName'];
     $email = $user['Email'];
     $phone = $user['PhoneNumber'];
-} else {
-    // Default values if user not found
+} 
+}
+else{
     $firstName = $lastName = $email = $phone = '';
 }
 ?>
