@@ -92,18 +92,6 @@ function validateForm(event, formType) {
         "Passwords do not match.";
       isValid = false;
     }
-
-    const dobField = document.getElementById("dob");
-    const today = new Date().toISOString().split("T")[0];
-    if (!dobField.value) {
-      document.getElementById("dob-error").textContent =
-        "Please enter your date of birth.";
-      isValid = false;
-    } else if (dobField.value > today) {
-      document.getElementById("dob-error").textContent =
-        "Please enter a past date.";
-      isValid = false;
-    }
   }
 
   if (!isValid) {
