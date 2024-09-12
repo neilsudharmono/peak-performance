@@ -10,6 +10,7 @@
   background-color: white;
   padding: 40px;
   text-align: center;
+  margin-top: 70px;
 }
 
 .login-form h1 {
@@ -67,7 +68,9 @@
   font-size: 1rem;
   font-weight: bold;
   margin-top: 20px;
-  transition: background-color 0.5s ease, color 0.3s ease;
+  transition:
+    background-color 0.5s ease,
+    color 0.3s ease;
 }
 
 .login-form button[type="submit"]:hover {

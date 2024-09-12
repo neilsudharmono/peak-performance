@@ -17,19 +17,59 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Fetch user information to pre-fill the form
+$email = $_SESSION["email"];
+$sql =
+    "SELECT FirstName, LastName, Email, PhoneNumber, PasswordHash FROM Users WHERE Email = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$stmt->bind_result($firstName, $lastName, $email, $phone, $currentPasswordHash);
+$stmt->fetch();
+$stmt->close();
+
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
     // Sanitize input
     $firstName = htmlspecialchars(trim($_POST["first-name"]));
     $lastName = htmlspecialchars(trim($_POST["last-name"]));
     $phone = htmlspecialchars(trim($_POST["phone"]));
+    $currentPassword = htmlspecialchars(trim($_POST["current-password"]));
+    $newPassword = htmlspecialchars(trim($_POST["new-password"]));
+    $confirmNewPassword = htmlspecialchars(
+        trim($_POST["confirm-new-password"])
+    );
 
-    // Check if any field is empty (basic validation)
+    // Basic validation
     if (empty($firstName) || empty($lastName) || empty($phone)) {
         echo "<script>alert('Please fill all required fields.');</script>";
     } else {
+        // Check if the user wants to change the password
+        if (!empty($newPassword) || !empty($confirmNewPassword)) {
+            // Ensure current password is entered and valid
+            if (empty($currentPassword)) {
+                echo "<script>alert('Please enter your current password to change the password.'); window.location.href = 'update-user.php';</script>";
+                exit(); // Stop further execution
+            } elseif (
+                !password_verify($currentPassword, $currentPasswordHash)
+            ) {
+                echo "<script>alert('Current password is incorrect.'); window.location.href = 'update-user.php';</script>";
+                exit(); // Stop further execution
+            } elseif ($newPassword !== $confirmNewPassword) {
+                echo "<script>alert('New passwords do not match.'); window.location.href = 'update-user.php';</script>";
+                exit(); // Stop further execution
+            } else {
+                // Update the password in the database
+                $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+                $sql = "UPDATE Users SET PasswordHash = ? WHERE Email = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("ss", $hashedPassword, $email);
+                $stmt->execute();
+                echo "<script>alert('Password has been updated successfully!');</script>";
+            }
+        }
+
         // Update user information in the database
-        $email = $_SESSION["email"];
         $sql =
             "UPDATE Users SET FirstName = ?, LastName = ?, PhoneNumber = ? WHERE Email = ?";
         $stmt = $conn->prepare($sql);
@@ -49,18 +89,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
 
         $stmt->close();
     }
+    $conn->close();
 }
-
-// Fetch user information to pre-fill the form
-$email = $_SESSION["email"];
-$sql = "SELECT FirstName, LastName, PhoneNumber FROM Users WHERE Email = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $email);
-$stmt->execute();
-$stmt->bind_result($firstName, $lastName, $phone);
-$stmt->fetch();
-$stmt->close();
-$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -84,7 +114,6 @@ $conn->close();
             position: fixed;
             width: 100%;
             z-index: 1000;
-            position: relative;
         }
     </style>
 </head>
@@ -112,7 +141,7 @@ $conn->close();
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" value="<?php echo htmlspecialchars(
-                    $_SESSION["email"]
+                    $email
                 ); ?>" disabled><br>
             </div>
             <div class="form-group">
@@ -122,6 +151,24 @@ $conn->close();
                 ); ?>" required aria-required="true" aria-describedby="phone-error" pattern="[0-9]{10}">
                 <span id="phone-error" class="error-message"></span>
             </div>
+
+            <!-- Password Update Section -->
+            <div class="form-group">
+                <label for="current-password">Current Password</label>
+                <input type="password" id="current-password" name="current-password" aria-describedby="current-password-error">
+                <span id="current-password-error" class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="new-password">New Password</label>
+                <input type="password" id="new-password" name="new-password" aria-describedby="new-password-error">
+                <span id="new-password-error" class="error-message"></span>
+            </div>
+            <div class="form-group">
+                <label for="confirm-new-password">Confirm New Password</label>
+                <input type="password" id="confirm-new-password" name="confirm-new-password" aria-describedby="confirm-new-password-error">
+                <span id="confirm-new-password-error" class="error-message"></span>
+            </div>
+
             <button type="submit" name="update">Update</button>
         </form>
     </main>

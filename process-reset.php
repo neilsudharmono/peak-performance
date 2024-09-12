@@ -1,46 +1,51 @@
 <?php
-// Start session
 session_start();
 
-// Database connection settings
+// Redirect if email is not set
+if (!isset($_SESSION["reset_email"])) {
+    header("Location: forgot-password.php");
+    exit();
+}
+
+// Database connection
 $servername = "localhost";
 $username = "root";
 $password = "root";
 $dbname = "peakperformance";
 
-// Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$emailError = ""; // Variable to store error message
+$passwordError = "";
 
-// Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get the email from form
-    $email = htmlspecialchars(trim($_POST["email"]));
+    $newPassword = htmlspecialchars(trim($_POST["new-password"]));
+    $confirmPassword = htmlspecialchars(trim($_POST["confirm-password"]));
 
-    // Check if email exists in the database
-    $sql = "SELECT Email FROM Users WHERE Email = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $stmt->store_result();
+    if ($newPassword === $confirmPassword) {
+        // Hash the new password
+        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
 
-    // If email exists, redirect to answer-user-question.php
-    if ($stmt->num_rows > 0) {
-        $_SESSION["reset_email"] = $email;
-        header("Location: answer-user-question.php");
-        exit();
+        // Update password in the database using email from session
+        $email = $_SESSION["reset_email"];
+        $sql = "UPDATE Users SET PasswordHash = ? WHERE Email = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $hashedPassword, $email);
+
+        if ($stmt->execute()) {
+            echo "<script>alert('Password updated successfully!'); window.location.href = 'login.php';</script>";
+        } else {
+            $passwordError = "Error updating password. Please try again.";
+        }
+
+        $stmt->close();
     } else {
-        // If email doesn't exist, show error message
-        $emailError = "The email is not registered.";
+        $passwordError = "Passwords do not match.";
     }
 
-    $stmt->close();
     $conn->close();
 }
 ?>
@@ -50,8 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forgot Password | Peak Performance Sports Club</title>
-    <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
+    <title>Reset Password | Peak Performance Sports Club</title>
     <link rel="stylesheet" href="css/header.css" />
     <link rel="stylesheet" href="css/footer.css" />
     <link rel="stylesheet" href="css/login.css" />
@@ -120,22 +124,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background-color: #0b5b62;
         }
 
-        .back-to-login-link {
-            display: block;
-            text-align: center;
-            margin-top: 10px;
-            color: #084149;
-            text-decoration: none;
-        }
-
-        .back-to-login-link:hover {
-            text-decoration: underline;
-        }
-
         .error-message {
             color: red;
             font-size: 0.875em;
-            text-align: center;
         }
     </style>
 </head>
@@ -145,22 +136,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- Main Content -->
     <main class="login-container">
-        <form class="login-form" id="forgot-password-form" action="" method="POST" novalidate>
-            <h1>Forgot Password</h1>
+        <form class="login-form" action="" method="POST">
+            <h1>Reset Your Password</h1>
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required aria-required="true" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" />
-                <span id="email-error" class="error-message"><?php echo $emailError; ?></span>
+                <label for="new-password">New Password</label>
+                <input type="password" id="new-password" name="new-password" required>
             </div>
-            <button type="submit">Submit</button>
-            <a href="login.php" class="back-to-login-link">Back to Login</a>
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+            </div>
+            <span class="error-message"><?php echo $passwordError; ?></span>
+            <button type="submit">Reset Password</button>
         </form>
     </main>
 
     <!-- Footer -->
     <?php include "footer.php"; ?>
-
-    <!-- Scripts -->
-    <script src="scripts/validation.js"></script>
 </body>
 </html>

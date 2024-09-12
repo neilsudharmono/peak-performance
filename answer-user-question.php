@@ -1,6 +1,11 @@
 <?php
-// Start session
 session_start();
+
+// Redirect if email is not set in the session
+if (!isset($_SESSION["reset_email"])) {
+    header("Location: forgot-password.php");
+    exit();
+}
 
 // Database connection settings
 $servername = "localhost";
@@ -8,41 +13,41 @@ $username = "root";
 $password = "root";
 $dbname = "peakperformance";
 
-// Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$emailError = ""; // Variable to store error message
+$answerError = "";
+$securityQuestion = "";
 
-// Check if form is submitted
+// Fetch the security question from the database
+$email = $_SESSION["reset_email"];
+$sql = "SELECT SecurityQuestion, SecurityAnswer FROM Users WHERE Email = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$stmt->bind_result($securityQuestion, $correctAnswer);
+$stmt->fetch();
+$stmt->close();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get the email from form
-    $email = htmlspecialchars(trim($_POST["email"]));
+    $answer = htmlspecialchars(trim($_POST["answer"]));
 
-    // Check if email exists in the database
-    $sql = "SELECT Email FROM Users WHERE Email = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $stmt->store_result();
-
-    // If email exists, redirect to answer-user-question.php
-    if ($stmt->num_rows > 0) {
-        $_SESSION["reset_email"] = $email;
-        header("Location: answer-user-question.php");
+    // Compare the user input answer with the stored answer
+    if ($answer === $correctAnswer) {
+        // Correct answer, redirect to password reset page
+        header("Location: process-reset.php");
         exit();
     } else {
-        // If email doesn't exist, show error message
-        $emailError = "The email is not registered.";
+        // Incorrect answer, show error message
+        $answerError =
+            "The answer you provided is incorrect. Please try again.";
     }
-
-    $stmt->close();
-    $conn->close();
 }
+
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -50,8 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forgot Password | Peak Performance Sports Club</title>
-    <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
+    <title>Answer Security Question | Peak Performance Sports Club</title>
     <link rel="stylesheet" href="css/header.css" />
     <link rel="stylesheet" href="css/footer.css" />
     <link rel="stylesheet" href="css/login.css" />
@@ -120,22 +124,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background-color: #0b5b62;
         }
 
-        .back-to-login-link {
-            display: block;
-            text-align: center;
-            margin-top: 10px;
-            color: #084149;
-            text-decoration: none;
-        }
-
-        .back-to-login-link:hover {
-            text-decoration: underline;
-        }
-
         .error-message {
             color: red;
             font-size: 0.875em;
-            text-align: center;
         }
     </style>
 </head>
@@ -145,22 +136,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- Main Content -->
     <main class="login-container">
-        <form class="login-form" id="forgot-password-form" action="" method="POST" novalidate>
-            <h1>Forgot Password</h1>
+        <form class="login-form" id="answer-question-form" action="" method="POST" novalidate>
+            <h1>Security Question</h1>
+            <p><strong><?php echo htmlspecialchars(
+                $securityQuestion
+            ); ?></strong></p>
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required aria-required="true" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" />
-                <span id="email-error" class="error-message"><?php echo $emailError; ?></span>
+                <label for="answer">Your Answer</label>
+                <input type="text" id="answer" name="answer" required aria-required="true">
+                <span class="error-message"><?php echo $answerError; ?></span>
             </div>
             <button type="submit">Submit</button>
-            <a href="login.php" class="back-to-login-link">Back to Login</a>
         </form>
     </main>
 
     <!-- Footer -->
     <?php include "footer.php"; ?>
-
-    <!-- Scripts -->
-    <script src="scripts/validation.js"></script>
 </body>
 </html>

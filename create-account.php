@@ -40,6 +40,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST["checkEmail"])) {
     $password = htmlspecialchars(trim($_POST["password"]));
     $retypePassword = htmlspecialchars(trim($_POST["retype-password"]));
     $phone = htmlspecialchars(trim($_POST["phone"]));
+    $securityQuestion = htmlspecialchars(trim($_POST["security-question"]));
+    $securityAnswer = htmlspecialchars(trim($_POST["security-answer"]));
 
     // Password check
     if ($password !== $retypePassword) {
@@ -48,19 +50,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST["checkEmail"])) {
         // HashedPassword
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        // SQL
-        $sql = "INSERT INTO Users (FirstName, LastName, Email, PhoneNumber, RoleID, PasswordHash)
-            VALUES (?, ?, ?, ?, 1, ?)";
+        // SQL with updated SecurityQuestion and SecurityAnswer
+        $sql = "INSERT INTO Users (FirstName, LastName, Email, PhoneNumber, RoleID, PasswordHash, SecurityQuestion, SecurityAnswer)
+            VALUES (?, ?, ?, ?, 1, ?, ?, ?)";
 
         // SQL execute
         $stmt = $conn->prepare($sql);
         $stmt->bind_param(
-            "sssss",
+            "sssssss",
             $firstName,
             $lastName,
             $email,
             $phone,
-            $hashedPassword
+            $hashedPassword,
+            $securityQuestion,
+            $securityAnswer
         );
 
         if ($stmt->execute()) {
@@ -153,6 +157,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST["checkEmail"])) {
                 <label for="phone">Phone Number</label>
                 <input type="tel" id="phone" name="phone" required aria-required="true" aria-describedby="phone-error" pattern="[0-9]{10}" />
                 <span id="phone-error" class="error-message"></span>
+            </div>
+            <!-- Security Question Selection -->
+            <div class="form-group">
+                <label for="security-question">Security Question</label>
+                <select id="security-question" name="security-question" required aria-required="true">
+                    <option value="">Select a Security Question</option>
+                    <option value="What is your pet name?">What is your pet's name?</option>
+                    <option value="What is your mother name?">What is your mother's maiden name?</option>
+                    <option value="What was the name of your first school?">What was the name of your first school?</option>
+                    <option value="What is your favorite color?">What is your favorite color?</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="security-answer">Your Answer</label>
+                <input type="text" id="security-answer" name="security-answer" required aria-required="true" aria-describedby="security-answer-error" />
+                <span id="security-answer-error" class="error-message"></span>
             </div>
             <button type="submit">Sign Up</button>
             <a href="login.php" class="back-to-login-link">Back to Login</a>
