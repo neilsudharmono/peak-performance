@@ -18,7 +18,7 @@ $eventName = $eventDate = $startTime = $endTime = $location = $categoryID = $des
 // If in edit mode, fetch the existing event details
 if ($editMode) {
     try {
-        $stmt = $pdo->prepare("SELECT * FROM events WHERE EventID = :eventID");
+        $stmt = $pdo->prepare("SELECT * FROM Events WHERE EventID = :eventID");
         $stmt->bindParam(':eventID', $eventID, PDO::PARAM_INT);
         $stmt->execute();
         $event = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -112,19 +112,19 @@ if ($editMode) {
 
         <div class="form-group">
             <label for="event-name">Event Name:</label>
-            <input type="text" id="event-name" name="event_name"  <?php if ($editMode):?> value="<?php echo htmlspecialchars($eventName); ?> "  <?php endif; ?> required>
+            <input type="text" id="event-name" name="event_name"  <?php if ($editMode):?> value="<?php echo htmlspecialchars($eventName); ?>"  <?php endif; ?> required>
             <span id="event-name-error" class="error-message"></span>
         </div>
 
         <div class="form-group">
             <label for="event-date">Event Date:</label>
-            <input type="date" id="event-date" name="event_date"  <?php if ($editMode):?> value="<?php echo htmlspecialchars($eventDate); ?> "  <?php endif; ?>  required>
+            <input type="date" id="event-date" name="event_date"  <?php if ($editMode):?> value="<?php echo htmlspecialchars($eventDate); ?>"  <?php endif; ?>  required>
             <span id="event-date-error" class="error-message"></span>
         </div>
 
         <div class="form-group">
             <label for="start-time">Start Time:</label>
-            <input type="time" id="start-time" name="start_time" <?php if ($editMode):?> value="<?php echo htmlspecialchars($startTime); ?> "  <?php endif; ?>  required>
+            <input type="time" id="start-time" name="start_time" <?php if ($editMode):?> value="<?php echo htmlspecialchars($startTime); ?>"  <?php endif; ?>  required>
                 <span id="start-time-error" class="error-message"></span>
 
             
@@ -132,7 +132,7 @@ if ($editMode) {
 
         <div class="form-group">
             <label for="end-time">End Time:</label>
-            <input type="time" id="end-time" name="end_time" <?php if ($editMode):?> value="<?php echo htmlspecialchars($endTime); ?> "  <?php endif; ?> required>
+            <input type="time" id="end-time" name="end_time" <?php if ($editMode):?> value="<?php echo htmlspecialchars($endTime); ?>"  <?php endif; ?> required>
             <span id="end-time-error" class="error-message"></span>
             
 
@@ -140,7 +140,7 @@ if ($editMode) {
 
         <div class="form-group">
             <label for="location">Location:</label>
-            <input type="text" id="location" name="location" <?php if ($editMode):?> value="<?php echo htmlspecialchars(string: $location); ?> "  <?php endif; ?> required>
+            <input type="text" id="location" name="location" <?php if ($editMode):?> value="<?php echo htmlspecialchars(string: $location); ?>"  <?php endif; ?> required>
             <span id="location-error" class="error-message"></span>
             
         </div>
@@ -167,7 +167,8 @@ if ($editMode) {
             <label for="image">Event Image:</label>
             <input type="file" id="event-image" name="image" accept="image/*">
             <?php if ($imageURL): ?>
-                <p>Current Image: <img src="<?php echo htmlspecialchars($imageURL); ?>" alt="Event Image" style="width: 100px;"></p>
+                <input type="hidden" name="current_image" value="<?php echo $imageURL; ?>">
+                <p>Current Image: <img id="current-image" src="<?php echo htmlspecialchars($imageURL); ?>" alt="Event Image" style="width: 100px;"></p>
             <?php endif; ?>
             <span id="event-image-error" class="error-message"></span>
 

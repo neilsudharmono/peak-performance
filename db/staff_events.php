@@ -5,7 +5,7 @@ require("db/db_connection.php");
 try {
     // Query to fetch event data
     $stmt = $pdo->prepare("SELECT EventID, EventName , EventDate, StartTime, EndTime, Location, CategoryName, Description, EventStatus, ImageURL 
-    FROM events e JOIN  EventCategories c  On e.CategoryID = c.CategoryID ORDER BY EventDate ASC");
+    FROM Events e JOIN  EventCategories c  On e.CategoryID = c.CategoryID ORDER BY EventDate ASC");
     $stmt->execute();
 
     // Check if any rows are returned
@@ -30,7 +30,8 @@ try {
 
         // Fetch each row as an associative array
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo '<tr>
+
+             echo '<tr>
                     <td>' . htmlspecialchars($row["EventName"]) . '</td>
                     <td>' . htmlspecialchars($row["EventDate"]) . '</td>
                     <td>' . htmlspecialchars($row["StartTime"]) . '</td>

@@ -18,7 +18,7 @@ $eventName = $eventDate = $startTime = $endTime = $location = $categoryID = $des
 // If in edit mode, fetch the existing event details
 if ($editMode) {
     try {
-        $stmt = $pdo->prepare("SELECT * FROM events WHERE EventID = :eventID");
+        $stmt = $pdo->prepare("SELECT * FROM Events WHERE EventID = :eventID");
         $stmt->bindParam(':eventID', $eventID, PDO::PARAM_INT);
         $stmt->execute();
         $event = $stmt->fetch(PDO::FETCH_ASSOC);

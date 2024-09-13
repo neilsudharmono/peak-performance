@@ -17,7 +17,7 @@ if (isset($_GET['id'])) {
 
         try {
             // Prepare the SQL statement to delete the event
-            $stmt = $pdo->prepare("DELETE FROM events WHERE EventID = :eventID");
+            $stmt = $pdo->prepare("DELETE FROM Events WHERE EventID = :eventID");
             $stmt->bindParam(':eventID', $eventID, PDO::PARAM_INT);
     
             // Execute the statement

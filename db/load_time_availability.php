@@ -12,7 +12,7 @@ if (isset($_POST['facilityId']) && isset($_POST['bookingDate'])) {
             FROM TimeDurations td
             WHERE td.TimeDurationID NOT IN (
                 SELECT b.TimeDurationID
-                FROM Bookings b
+                FROM bookings b
                 WHERE b.FacilityID = :facilityId AND b.BookingDate = :bookingDate
             )";
 

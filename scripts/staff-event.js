@@ -14,6 +14,7 @@ document
 
     let isValid = true;
     console.log("Form submit triggered");
+    const currentImage = document.getElementById("current-image");
 
     fields.forEach((field) => {
       const input = document.getElementById(field.id);
@@ -23,10 +24,12 @@ document
       errorElement.textContent = "";
       console.log(value);
       if (field.id === "event-image") {
-        // For file input, check if a file is selected
-        if (!input.files || input.files.length === 0) {
-          errorElement.textContent = `Please upload ${field.name}.`;
-          isValid = false;
+        // Only validate file upload in create mode (when currentImage is null or empty)
+        if (!currentImage || currentImage.value.trim() === "") {
+          if (!input.files || input.files.length === 0) {
+            errorElement.textContent = `Please upload ${field.name}.`;
+            isValid = false;
+          }
         }
       } else {
         if (!value) {
