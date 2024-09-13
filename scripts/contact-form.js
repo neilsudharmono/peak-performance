@@ -2,7 +2,7 @@ document
   .getElementById("contact-form")
   .addEventListener("submit", function (event) {
     const fields = [
-      { id: "first-name", name: "First Name" },
+      { id: "full-name", name: "Full Name" },
       {
         id: "email",
         name: "Email",

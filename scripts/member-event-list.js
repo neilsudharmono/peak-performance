@@ -331,45 +331,138 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function unregisterEvent(registrationID) {
-    console.log("Unregistering event with ID:", registrationID); // Debugging log
+    // Show confirmation dialog
+    const confirmation = confirm(
+      "Are you sure you want to unregister from this event?"
+    );
 
-    fetch("db/unregister_event.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ registrationID }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Response from server:", data); // Debugging log
+    // If the user confirms, proceed with the unregister operation
+    if (confirmation) {
+      console.log("Unregistering event with ID:", registrationID); // Debugging log
 
-        if (data.success) {
-          showModal("Successfully unregistered from the event!");
-        } else {
-          alert("Failed to unregister from the event. Please try again.");
-        }
+      fetch("db/unregister_event.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ registrationID }),
       })
-      .catch((error) => console.error("Error:", error));
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Response from server:", data); // Debugging log
+
+          if (data.success) {
+            showModal("Successfully unregistered from the event!");
+          } else {
+            alert("Failed to unregister from the event. Please try again.");
+          }
+        })
+        .catch((error) => console.error("Error:", error));
+    } else {
+      console.log("User canceled the unregistration.");
+    }
   }
 
   function unregisterBooking(bookingID) {
-    fetch("db/unregister_booking.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ bookingID }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          showModal("Successfully unregistered from the booking!");
-        } else {
-          alert("Failed to unregister from the booking. Please try again.");
-        }
+    // Show confirmation dialog
+    const confirmation = confirm(
+      "Are you sure you want to cancel this booking?"
+    );
+
+    // If the user confirms, proceed with the booking cancellation
+    if (confirmation) {
+      fetch("db/unregister_booking.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ bookingID }),
       })
-      .catch((error) => console.error("Error:", error));
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            showModal("Successfully unregistered from the booking!");
+          } else {
+            alert("Failed to unregister from the booking. Please try again.");
+          }
+        })
+        .catch((error) => console.error("Error:", error));
+    } else {
+      console.log("User canceled the booking cancellation.");
+    }
+  }
+
+  function showConfirmationModal(message, onConfirm) {
+    const modal = document.getElementById("confirmationModal");
+    const messageElement = document.getElementById("confirmation-message");
+
+    messageElement.textContent = message;
+    modal.style.display = "block";
+
+    // Handle the confirm action
+    document.getElementById("confirmButton").onclick = function () {
+      onConfirm(); // Call the onConfirm callback when confirmed
+      modal.style.display = "none";
+    };
+
+    // Handle the cancel action
+    document.getElementById("cancelButton").onclick = function () {
+      modal.style.display = "none";
+    };
+
+    // Close modal when clicking outside the modal content
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    };
+  }
+
+  function unregisterEvent(registrationID) {
+    showConfirmationModal(
+      "Are you sure you want to unregister from this event?",
+      function () {
+        fetch("db/unregister_event.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ registrationID }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              showModal("Successfully unregistered from the event!");
+            } else {
+              alert("Failed to unregister from the event. Please try again.");
+            }
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+    );
+  }
+  function unregisterBooking(bookingID) {
+    showConfirmationModal(
+      "Are you sure you want to cancel this booking?",
+      function () {
+        fetch("db/unregister_booking.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ bookingID }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              showModal("Successfully unregistered from the booking!");
+            } else {
+              alert("Failed to unregister from the booking. Please try again.");
+            }
+          })
+          .catch((error) => console.error("Error:", error));
+      }
+    );
   }
 
   function showModal(message) {
@@ -379,12 +472,6 @@ document.addEventListener("DOMContentLoaded", function () {
     modal.style.display = "block"; // Show the modal
 
     // Close modal when clicking the close button or OK button
-    document.querySelector(".close-button").onclick = function () {
-      modal.style.display = "none";
-      setTimeout(() => {
-        location.reload();
-      }, 500); // Adjust the timeout duration as needed
-    };
     document.getElementById("okButton").onclick = function () {
       modal.style.display = "none";
       setTimeout(() => {

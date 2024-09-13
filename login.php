@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Prepare the SQL statement to prevent SQL injection
     $sql =
-        "SELECT UserID, FirstName, LastName, PasswordHash FROM Users WHERE Email = ?";
+        "SELECT UserID, FirstName, LastName, PasswordHash, RoleID FROM Users WHERE Email = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Check if the user exists
     if ($stmt->num_rows > 0) {
-        $stmt->bind_result($userID, $firstName, $lastName, $passwordHash);
+        $stmt->bind_result($userID, $firstName, $lastName, $passwordHash, $roleID);
         $stmt->fetch();
 
         // Verify the password
@@ -45,10 +45,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["user_id"] = $userID;
             $_SESSION["first_name"] = $firstName;
             $_SESSION["last_name"] = $lastName;
-            $_SESSION["email"] = $email; // Store the email in the session
+            $_SESSION["email"] = $email; 
+            $_SESSION["role"] = $roleID; 
+
 
             // Redirect to a dashboard or homepage
-            header("Location: member-page.php");
+
+            if($roleID==1)
+            {
+              header("Location: member-page.php");
+
+            }
+            else
+            {
+              header("Location: staff-events-page.php");
+
+            }
             exit();
         } else {
             // Password is incorrect

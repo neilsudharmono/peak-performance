@@ -28,8 +28,19 @@
 }
 
 .form-group input,
-.form-group textarea {
+.form-group textarea,
+.form-group select {
   width: 50%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #333;
+}
+
+input {
+  width: 25%;
   padding: 10px;
   margin: 10px 0;
   border: 1px solid #ccc;
@@ -63,6 +74,67 @@ button[type="submit"]:hover {
   font-size: 0.875rem;
   margin-top: 5px;
   display: block;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+table,
+th,
+td {
+  border: 1px solid #ccc;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #b5b5b5;
+}
+.form-buttons {
+  gap: 10px; /* Space between buttons */
+}
+
+button[type="submit"],
+.cancel-btn {
+  width: 25%; /* Same width for both buttons */
+  height: 50px; /* Set a fixed height for both buttons */
+  padding: 0 10px;
+  background-color: #bafb67;
+  color: black;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  display: inline-flex; /* Ensures height and padding match */
+  align-items: center; /* Vertically centers the text */
+  justify-content: center; /* Horizontally centers the text */
+}
+
+.cancel-btn {
+  background-color: #ccc;
+  text-decoration: none;
+  line-height: 1.5rem; /* Ensure proper text height inside the link */
+  display: inline-flex; /* Makes the anchor behave like a button */
+  align-items: center;
+  justify-content: center;
+}
+
+button[type="submit"]:hover,
+.cancel-btn:hover {
+  background-color: #ccff99; /* Optional hover effect for submit */
+}
+
+.cancel-btn:hover {
+  background-color: #bbb; /* Hover effect for cancel */
 }
 
 @media (max-width: 768px) {

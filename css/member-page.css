@@ -197,6 +197,51 @@ header {
   align-self: center; /* Center vertically within the grid */
 }
 
+#confirmButton {
+  background-color: #bafb67; /* Same as event-cta */
+  color: black;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+}
+
+#confirmButton:hover {
+  background-color: #a6e056; /* Same hover effect as event-cta */
+}
+
+#cancelButton {
+  background-color: #ff6b6b; /* Red background for Cancel button */
+  color: white; /* Ensure the text color contrasts */
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+}
+
+#cancelButton:hover {
+  background-color: #e05656; /* Darker red on hover */
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #888;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 400px;
+  margin: auto;
+  text-align: center;
+}
+
+.modal-content button {
+  margin: 10px;
+}
+
 @media (max-width: 768px) {
   .filtered-events-container {
     flex-direction: column;

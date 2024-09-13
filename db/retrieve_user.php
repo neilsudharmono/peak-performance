@@ -9,7 +9,7 @@ if (isset($_SESSION['user_id'])) {
 $userID = $_SESSION['user_id'];
 
 // Fetch user details
-$sql = "SELECT FirstName, LastName, Email, PhoneNumber FROM Users WHERE UserID = :userId";
+$sql = "SELECT FirstName, LastName, Email, PhoneNumber, RoleID FROM Users WHERE UserID = :userId";
 $stmt = $pdo->prepare($sql);
 $stmt->execute(['userId' => $userID]);
 $user = $stmt->fetch();
@@ -20,9 +20,10 @@ if ($user) {
     $lastName = $user['LastName'];
     $email = $user['Email'];
     $phone = $user['PhoneNumber'];
+    $roleID = $user['RoleID'];
 } 
 }
 else{
-    $firstName = $lastName = $email = $phone = '';
+    $firstName = $lastName = $email = $phone = $roleID = '';
 }
 ?>

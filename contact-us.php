@@ -46,18 +46,18 @@
         </p>
       </div>
       <section class="contact-form">
-        <form id="contact-form" novalidate>
+        <form id="contact-form" action="db/contact_us_insert.php" method="post" novalidate>
           <div class="form-group">
-            <label for="first-name">First Name *</label>
+            <label for="full-name">Full Name *</label>
             <input
               type="text"
-              id="first-name"
-              name="first-name"
+              id="full-name"
+              name="full-name"
               required
               aria-required="true"
-              aria-describedby="first-name-error"
+              aria-describedby="full-name-error"
             />
-            <span id="first-name-error" class="error-message"></span>
+            <span id="full-name-error" class="error-message"></span>
           </div>
           <div class="form-group">
             <label for="email">Email *</label>
