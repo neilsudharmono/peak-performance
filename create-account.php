@@ -100,6 +100,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST["checkEmail"])) {
     <link rel="stylesheet" href="css/footer.css" />
     <link rel="stylesheet" href="css/login.css" />
     <link rel="stylesheet" href="css/create-account.css" />
+
+    <style>
+      header {
+        background-color: #084149; 
+        padding: 10px 0;
+        font-size: 16px;
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+        position: relative;
+      }
+      </style>
 </head>
 <body>
     <!-- Header -->

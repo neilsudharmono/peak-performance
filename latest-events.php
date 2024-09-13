@@ -1,3 +1,7 @@
+<?php
+require "db/retrieve_user.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

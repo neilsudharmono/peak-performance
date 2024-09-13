@@ -1,8 +1,7 @@
 <?php
 require("db/db_connection.php");
-session_start(); // Ensure session is started
+session_start();
 
-// Check if user_id is set in the session
 if (!isset($_SESSION['user_id'])) {
     // If user_id is not set, redirect to the login page
     header("Location: login.php");

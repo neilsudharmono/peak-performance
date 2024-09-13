@@ -5,20 +5,20 @@ ini_set("session.cookie_lifetime", 3600); // 1 hour
 // Set the maximum time in seconds before a session expires if not used
 ini_set("session.gc_maxlifetime", 3600); // 1 hour
 
-session_start(); // Start the session
-
 // Database connection settings
 $servername = "localhost";
 $username = "root";
 $password = "root";
 $dbname = "peakperformance";
+$port = 8888;
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+try {
+    // Create a new PDO connection
+    $conn = new PDO("mysql:host=$servername;port=$port;dbname=$dbname", $username, $password);
+    // Set the PDO error mode to exception
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Connection failed: " . $e->getMessage());
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -27,39 +27,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = htmlspecialchars(trim($_POST["password"]));
 
     // Prepare the SQL statement to prevent SQL injection
-    $sql =
-        "SELECT UserID, FirstName, LastName, PasswordHash, RoleID FROM Users WHERE Email = ?";
+    $sql = "SELECT UserID, FirstName, LastName, PasswordHash, RoleID FROM Users WHERE Email = :email";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $email);
+    $stmt->bindParam(':email', $email, PDO::PARAM_STR);
     $stmt->execute();
-    $stmt->store_result();
 
     // Check if the user exists
-    if ($stmt->num_rows > 0) {
-        $stmt->bind_result($userID, $firstName, $lastName, $passwordHash, $roleID);
-        $stmt->fetch();
+    if ($stmt->rowCount() > 0) {
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $userID = $row['UserID'];
+        $firstName = $row['FirstName'];
+        $lastName = $row['LastName'];
+        $passwordHash = $row['PasswordHash'];
+        $roleID = $row['RoleID'];
 
         // Verify the password
         if (password_verify($password, $passwordHash)) {
             // Password is correct, set session variables
+            session_start();
             $_SESSION["user_id"] = $userID;
             $_SESSION["first_name"] = $firstName;
             $_SESSION["last_name"] = $lastName;
-            $_SESSION["email"] = $email; 
-            $_SESSION["role"] = $roleID; 
+            $_SESSION["email"] = $email;
+            $_SESSION["role"] = $roleID;
 
+            echo "<script>alert('SUCCESS');</script>";
 
             // Redirect to a dashboard or homepage
-
-            if($roleID==1)
-            {
-              header("Location: member-page.php");
-
-            }
-            else
-            {
-              header("Location: staff-events-page.php");
-
+            if ($roleID == 1) {
+                header("Location: member-page.php");
+            } else {
+                header("Location: staff-events-page.php");
             }
             exit();
         } else {
@@ -71,11 +69,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>alert('No user found with that email. Please try again.');</script>";
     }
 
-    // Close the statement and connection
-    $stmt->close();
-    $conn->close();
+    // Close the connection
+    $conn = null;
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -92,6 +90,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="css/footer.css" />
     <link rel="stylesheet" href="css/login.css" />
     <title>Login | Peak Performance Sports Club</title>
+
+    <style>
+      header {
+        background-color: #084149; 
+        padding: 10px 0;
+        font-size: 16px;
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+        position: relative;
+      }
+      </style>
 </head>
 
 <body>

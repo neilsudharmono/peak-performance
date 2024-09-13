@@ -1,6 +1,5 @@
 <?php
 // Start session
-session_start();
 
 // Database connection settings
 $servername = "localhost";
@@ -61,6 +60,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="css/forgot-password.css">
+
+    <style>
+      header {
+        background-color: #084149; 
+        padding: 10px 0;
+        font-size: 16px;
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+        position: relative;
+      }
+      </style>
 </head>
 <body>
     <!-- Header -->

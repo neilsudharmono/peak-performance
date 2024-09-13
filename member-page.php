@@ -1,9 +1,9 @@
 <?php
 // Start the session to access session variables
 session_start();
+// Ensure the user is logged in before displaying the page/*
 
-// Ensure the user is logged in before displaying the page
-if (!isset($_SESSION["first_name"])) {
+if (!isset($_SESSION["user_id"])) {
     // Redirect to login page if not logged in
     header("Location: login.php");
     exit();
@@ -87,6 +87,15 @@ $firstName = $_SESSION["first_name"];
         <button id="okButton" class="modal-button">OK</button>
       </div>
     </div>
+
+    <div id="confirmationModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button">&times;</span>
+    <p id="confirmation-message"></p>
+    <button id="confirmButton">Confirm</button>
+    <button id="cancelButton">Cancel</button>
+  </div>
+</div>
 
     <?php include "footer.php"; ?>
   </body>

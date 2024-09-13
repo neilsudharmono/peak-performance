@@ -5,7 +5,6 @@ header(
 );
 header("Pragma: no-cache");
 
-session_start();
 
 // Check if the user is logged in
 $isLoggedIn = false;
