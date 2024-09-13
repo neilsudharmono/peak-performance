@@ -7,10 +7,17 @@ if (!isset($_SESSION["email"])) {
 }
 
 // DB connection settings
+$servername = 'sql305.byetcluster.com';  
+$dbname = 'if0_37303582_peakperformance';  
+$username = 'if0_37303582';  
+$password = 'nJs0p7Jfvt2'; 
+
+/*
 $servername = "localhost";
 $username = "root";
 $password = "root";
 $dbname = "peakperformance";
+*/
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {

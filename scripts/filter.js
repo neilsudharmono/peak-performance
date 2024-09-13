@@ -118,9 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
         eventTiles.forEach((eventTile) => {
           container.appendChild(eventTile);
         });
-      });
 
-      setTimeout(() => {
         document.querySelectorAll(".event-cta").forEach((button) => {
           button.addEventListener("click", function (e) {
             if (!isLoggedIn) {
@@ -136,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
           });
         });
-      }, 500);
+      });
     });
   }
 

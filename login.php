@@ -6,12 +6,18 @@ ini_set("session.cookie_lifetime", 3600); // 1 hour
 ini_set("session.gc_maxlifetime", 3600); // 1 hour
 
 // Database connection settings
+$servername = 'sql305.byetcluster.com';  
+$dbname = 'if0_37303582_peakperformance';  
+$username = 'if0_37303582';  
+$password = 'nJs0p7Jfvt2'; 
+
+/*
 $servername = "localhost";
 $username = "root";
 $password = "root";
 $dbname = "peakperformance";
 $port = 8888;
-
+*/
 try {
     // Create a new PDO connection
     $conn = new PDO("mysql:host=$servername;port=$port;dbname=$dbname", $username, $password);

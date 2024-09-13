@@ -2,10 +2,17 @@
 // Start session
 
 // Database connection settings
+$servername = 'sql305.byetcluster.com';  
+$dbname = 'if0_37303582_peakperformance';  
+$username = 'if0_37303582';  
+$password = 'nJs0p7Jfvt2'; 
+
+/*
 $servername = "localhost";
 $username = "root";
 $password = "root";
 $dbname = "peakperformance";
+*/
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);

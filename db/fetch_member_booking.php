@@ -17,7 +17,7 @@ try {
             f.Image as imgSrc, 
             b.Notes as notes 
         FROM 
-            Bookings b 
+            bookings b 
         JOIN 
             Facilities f ON b.FacilityID = f.FacilityID 
         JOIN 

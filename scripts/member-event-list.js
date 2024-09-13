@@ -104,8 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
       eventTiles.forEach((eventTile) => {
         container.appendChild(eventTile);
       });
-    });
-    setTimeout(() => {
+
       document.querySelectorAll(".event-cta").forEach((button) => {
         button.addEventListener("click", function (e) {
           e.preventDefault();
@@ -114,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function () {
           unregisterEvent(registrationID); // Call the unregister function
         });
       });
-    }, 500); // Adjust timeout as needed based on the async call timing
+    });
   }
 
   function renderBookings() {
@@ -476,7 +475,7 @@ document.addEventListener("DOMContentLoaded", function () {
       modal.style.display = "none";
       setTimeout(() => {
         location.reload();
-      }, 500); // Adjust the timeout duration as needed
+      }); // Adjust the timeout duration as needed
     };
 
     // Close modal when clicking outside the modal content
