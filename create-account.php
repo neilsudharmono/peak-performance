@@ -89,36 +89,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST["checkEmail"])) {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Sign up to become a member of Peak Performance Sports Club. Join now to access exclusive sports facilities and events.">
+    <meta name="keywords" content="Peak Performance Sports Club, sign up, membership, tennis, lawn bowl, sports club">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Peak Performance Sports Club">
+    <meta name="theme-color" content="#084149">
+    <link rel="icon" type="image/x-icon" href="/peak-performance/img/favicon1.png" />
     <title>Sign up | Peak Performance Sports Club</title>
-    <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
-    <link rel="stylesheet" href="css/header.css" />
+    <link rel="stylesheet" href="css/header.css?v=1.0" />
     <link rel="stylesheet" href="css/footer.css" />
-    <link rel="stylesheet" href="css/image-header-no-title.css" />
-    <link rel="stylesheet" href="css/page-info.css" />
-    <link rel="stylesheet" href="css/info-cta.css" />
     <link rel="stylesheet" href="css/login.css" />
-    <style>
-        header {
-            background-color: #084149;
-            padding: 10px 0;
-            font-size: 16px;
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-            position: relative;
-        }
-        .email-status {
-            font-size: 0.9em;
-            margin-top: 5px;
-            display: block;
-        }
-        .email-status.error {
-            color: red;
-        }
-        .email-status.success {
-            color: green;
-        }
-    </style>
+    <link rel="stylesheet" href="css/create-account.css" />
 </head>
 <body>
     <!-- Header -->

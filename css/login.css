@@ -1,3 +1,7 @@
+header {
+  background-color: #084149;
+}
+
 .login-container {
   display: flex;
   justify-content: center;
@@ -10,7 +14,11 @@
   background-color: white;
   padding: 40px;
   text-align: center;
-  margin-top: 70px;
+  margin-top: 90px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
 }
 
 .login-form h1 {

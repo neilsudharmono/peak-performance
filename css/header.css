@@ -16,6 +16,15 @@ header {
   z-index: 1000;
 }
 
+.nav-menu ul li a:hover {
+  color: #bafb67; /* Change color on hover */
+}
+
+/* Active state for the selected page */
+.nav-menu ul li a.active {
+  color: #bafb67; /* Highlight the active link */
+}
+
 .header-scrolled {
   background-color: #084149;
 }
@@ -78,6 +87,10 @@ header {
 .welcome-message {
   color: #bafb67;
   font-weight: bold;
+}
+
+.welcome-message a {
+  color: #bafb67;
 }
 
 @media (max-width: 768px) {

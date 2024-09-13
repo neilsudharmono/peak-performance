@@ -50,94 +50,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Forgot your password for Peak Performance Sports Club? Recover access to your account by submitting your registered email address.">
+    <meta name="keywords" content="Peak Performance Sports Club, forgot password, reset password, user recovery, sports club">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Peak Performance Sports Club">
+    <meta name="theme-color" content="#084149">
+    <link rel="icon" type="image/x-icon" href="/peak-performance/img/favicon1.png" />
     <title>Forgot Password | Peak Performance Sports Club</title>
-    <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
-    <link rel="stylesheet" href="css/header.css" />
-    <link rel="stylesheet" href="css/footer.css" />
-    <link rel="stylesheet" href="css/login.css" />
-    <style>
-        header {
-            background-color: #084149;
-            padding: 10px 0;
-            font-size: 16px;
-            width: 100%;
-            position: fixed;
-            z-index: 1000;
-        }
-
-        .login-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 80vh;
-        }
-
-        .login-form {
-            width: 100%;
-            max-width: 400px;
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .login-form h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #084149;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #084149;
-            color: white;
-            font-size: 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0b5b62;
-        }
-
-        .back-to-login-link {
-            display: block;
-            text-align: center;
-            margin-top: 10px;
-            color: #084149;
-            text-decoration: none;
-        }
-
-        .back-to-login-link:hover {
-            text-decoration: underline;
-        }
-
-        .error-message {
-            color: red;
-            font-size: 0.875em;
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="css/header.css?v=1.0">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/forgot-password.css">
 </head>
 <body>
     <!-- Header -->

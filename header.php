@@ -1,12 +1,11 @@
 <?php
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Cache-Control: post-check=0, pre-check=0", false);
+header(
+    "Cache-Control: no-store, no-cache, must-revalidate, max-age=0, post-check=0, pre-check=0",
+    false
+);
 header("Pragma: no-cache");
 
-if(!isset($_SESSION)) 
-{ 
-    session_start(); 
-}
+session_start();
 
 // Check if the user is logged in
 $isLoggedIn = false;
@@ -29,7 +28,6 @@ if (isset($_SESSION["first_name"])) {
         alt="Peak Performance Sport Club"
       />
     </a>
-
     <div
       class="hamburger"
       id="hamburger-menu"
@@ -50,7 +48,7 @@ if (isset($_SESSION["first_name"])) {
 
      <div class="header-desktop-button">
        <?php if ($isLoggedIn): ?>
-          <span class="welcome-message"><a style="color:#bafb67" href="member-page.php">Welcome, <?php echo htmlspecialchars(
+          <span class="welcome-message"><a href="member-page.php">Welcome, <?php echo htmlspecialchars(
               $firstName
           ); ?>!</a></span>
           <a href="logout.php"><button>Logout</button></a>

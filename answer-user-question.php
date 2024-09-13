@@ -55,80 +55,16 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Answer the security question to reset your password at Peak Performance Sports Club. Secure your account and manage your profile with ease." />
+    <meta name="keywords" content="Peak Performance Sports Club, security question, password reset, account recovery, user authentication, sports club" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Peak Performance Sports Club" />
+    <meta name="theme-color" content="#084149" />
+    <link rel="icon" type="image/x-icon" href="/peak-performance/img/favicon1.png" />
     <title>Answer Security Question | Peak Performance Sports Club</title>
-    <link rel="stylesheet" href="css/header.css" />
+    <link rel="stylesheet" href="css/header.css?v=1.0" />
     <link rel="stylesheet" href="css/footer.css" />
     <link rel="stylesheet" href="css/login.css" />
-    <style>
-        header {
-            background-color: #084149;
-            padding: 10px 0;
-            font-size: 16px;
-            width: 100%;
-            position: fixed;
-            z-index: 1000;
-        }
-
-        .login-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 80vh;
-        }
-
-        .login-form {
-            width: 100%;
-            max-width: 400px;
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .login-form h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #084149;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #084149;
-            color: white;
-            font-size: 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0b5b62;
-        }
-
-        .error-message {
-            color: red;
-            font-size: 0.875em;
-        }
-    </style>
 </head>
 <body>
     <!-- Header -->
@@ -137,10 +73,10 @@ $conn->close();
     <!-- Main Content -->
     <main class="login-container">
         <form class="login-form" id="answer-question-form" action="" method="POST" novalidate>
-            <h1>Security Question</h1>
-            <p><strong><?php echo htmlspecialchars(
+            <h1 style="color:#084149;margin-bottom:30px;">Security Question</h1>
+            <h3 style="font-size: 1.2rem;color: #333;"><strong><?php echo htmlspecialchars(
                 $securityQuestion
-            ); ?></strong></p>
+            ); ?></strong></h3>
             <div class="form-group">
                 <label for="answer">Your Answer</label>
                 <input type="text" id="answer" name="answer" required aria-required="true">

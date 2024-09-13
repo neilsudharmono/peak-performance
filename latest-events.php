@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Latest Events | Peak Performance Sports Club</title>
-    <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
+    <meta name="description" content="Stay updated on the latest events at Peak Performance Sports Club, including tennis, lawn bowl, and function events. Join workshops, tournaments, and social gatherings.">
+    <meta name="keywords" content="Peak Performance Sports Club events, tennis events, lawn bowl events, sports club workshops, social gatherings, tournaments">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Peak Performance Sports Club">
+    <meta name="theme-color" content="#084149">
+    <link rel="icon" type="image/x-icon" href="/peak-performance/img/favicon1.png" />
     <link rel="stylesheet" href="css/header.css" />
     <link rel="stylesheet" href="css/footer.css" />
     <link rel="stylesheet" href="css/image-header-no-title.css" />
     <link rel="stylesheet" href="css/page-info.css" />
     <link rel="stylesheet" href="css/filtering.css" />
-  </head>
+    <title>Latest Events | Peak Performance Sports Club</title>
+</head>
   <body>
     <!-- Header -->
-    <?php include 'header.php'; ?>
+    <?php include "header.php"; ?>
 
     <main>
       <!-- Image Banner -->
@@ -115,7 +120,7 @@
   </div>
   </div>  
 
-    <?php include 'footer.php'; ?>
+    <?php include "footer.php"; ?>
 
   </body>
   <script src="scripts/script.js"></script>

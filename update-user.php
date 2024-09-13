@@ -96,25 +96,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Update your personal information and password for the Peak Performance Sports Club. Manage your profile and contact details securely.">
+    <meta name="keywords" content="Peak Performance Sports Club, user update, update profile, sports club, user information, update password">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Peak Performance Sports Club">
+    <meta name="theme-color" content="#084149">
     <title>Update User Information | Peak Performance Sports Club</title>
-    <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
-    <link rel="stylesheet" href="css/header.css">
+    <link rel="icon" type="image/x-icon" href="/peak-performance/img/favicon1.png" />
+    <link rel="stylesheet" href="css/header.css?v=1.0" />
     <link rel="stylesheet" href="css/footer.css">
-    <link rel="stylesheet" href="css/image-header-no-title.css">
-    <link rel="stylesheet" href="css/page-info.css">
-    <link rel="stylesheet" href="css/info-cta.css">
     <link rel="stylesheet" href="css/login.css">
     <style>
         header {
             background-color: #084149;
-            padding: 10px 0;
-            font-size: 16px;
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
         }
+        .login-container {
+            margin-bottom:40px;
+        }
+        input#email:disabled {
+            background-color: #e0e0e0; 
+            color: #666; 
+        }
+        
     </style>
 </head>
 <body>

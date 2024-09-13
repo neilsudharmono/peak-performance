@@ -14,42 +14,23 @@ $firstName = $_SESSION["first_name"];
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Latest Events | Peak Performance Sports Club</title>
-    <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
-    <link rel="stylesheet" href="css/header.css" />
+    <meta name="description" content="Check out the latest events and bookings at Peak Performance Sports Club. Stay updated with your activities and event details.">
+    <meta name="keywords" content="Latest events, bookings, dashboard, Peak Performance Sports Club, sports events, club events, member dashboard">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Peak Performance Sports Club">
+    <meta name="theme-color" content="#084149">
+    <link rel="icon" type="image/x-icon" href="/peak-performance/img/favicon1.png" />
+    <link rel="stylesheet" href="css/header.css?v=1.0" />
     <link rel="stylesheet" href="css/footer.css" />
     <link rel="stylesheet" href="css/image-header-no-title.css" />
     <link rel="stylesheet" href="css/page-info.css" />
-    <link rel="stylesheet" href="css/member-page.css" />
+    <link rel="stylesheet" href="css/member-page.css?v=1.0" />
     <link rel="stylesheet" href="css/filtering.css" />
-
-    <style>
-      header {
-        background-color: #084149; 
-        padding: 10px 0;
-        font-size: 16px;
-        position: fixed;
-        width: 100%;
-        z-index: 1000;
-        position: relative;
-      }
-      .update-button {
-        background-color: #084149;
-        color: #fff;
-        border: none;
-        padding: 4px 16px 0px;
-        cursor: pointer;
-        font-size: 16px;
-        margin-left: 10px;
-      }
-      .update-button:hover {
-        background-color: #06383d;
-      }
-    </style>
-  </head>
+    <title>Latest Events | Peak Performance Sports Club</title>
+</head>
   <body>
     <!-- Header -->
     <?php include "header.php"; ?>

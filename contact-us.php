@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Get in touch with Peak Performance Sports Club for inquiries, feedback, or support. Use our contact form to reach out for any questions." />
+    <meta name="keywords" content="Contact Peak Performance Sports Club, sports club support, sports club inquiries, tennis club contact, lawn bowl club contact" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Peak Performance Sports Club" />
+    <meta name="theme-color" content="#084149" />
+    <link rel="icon" type="image/x-icon" href="/peak-performance/img/favicon1.png" />
     <title>Contact us | Peak Performance Sports Club</title>
-    <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
-    <link rel="stylesheet" href="css/header.css" />
+    <link rel="stylesheet" href="css/header.css?v=1.0" />
     <link rel="stylesheet" href="css/footer.css" />
     <link rel="stylesheet" href="css/image-header-no-title.css" />
     <link rel="stylesheet" href="css/page-info.css" />
@@ -14,7 +19,7 @@
   </head>
   <body>
     <!-- Header -->
-    <?php include 'header.php'; ?>
+    <?php include "header.php"; ?>
 
     <main>
       <!-- Image Banner -->
@@ -83,7 +88,7 @@
       </section>
     </main>
 
-    <?php include 'footer.php'; ?>
+    <?php include "footer.php"; ?>
 
   </body>
   <script src="scripts/script.js"></script>

@@ -1,29 +1,39 @@
-<?php
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Cache-Control: post-check=0, pre-check=0", false);
-header("Pragma: no-cache");
-
-session_start();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO and Social Sharing Meta Tags -->
+    <meta name="description" content="Join Peak Performance Sports Club for tennis, lawn bowl, and more. Explore our state-of-the-art facilities, exciting events, and membership benefits." />
+    <meta name="keywords" content="Tennis, Lawn Bowl, Sports Club, Membership, Peak Performance, NSW, Sports, Events" />
+    <meta name="author" content="Peak Performance Sports Club" />
+
+    <!-- Open Graph for Social Media -->
+    <meta property="og:title" content="Peak Performance Sports Club" />
+    <meta property="og:description" content="Join Peak Performance Sports Club and enjoy premium tennis and lawn bowl facilities in NSW, along with exclusive events and memberships." />
+    <meta property="og:image" content="https://example.com/img/hero-banner.png" />
+    <meta property="og:url" content="https://example.com" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Peak Performance Sports Club" />
+    <meta name="twitter:description" content="Explore the best tennis and lawn bowl facilities, and sign up for exclusive memberships and events at Peak Performance Sports Club." />
+    <meta name="twitter:image" content="https://example.com/img/hero-banner.png" />
+
     <title>Peak Performance Sports Club</title>
-    <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/peak-performance/img/favicon1.png" />
     <link rel="stylesheet" href="css/header.css?v=1.0" />
     <link rel="stylesheet" href="css/footer.css" />
     <link rel="stylesheet" href="css/hero-banner.css" />
     <link rel="stylesheet" href="css/horizontal-scroll.css" />
     <link rel="stylesheet" href="css/mansonry.css" />
     <link rel="stylesheet" href="css/subscribe-form.css" />
-  </head>
+</head>
   <body>
     <!-- Header -->
     <?php include "header.php"; ?>
-
     <main>
       <!-- Hero Banner -->
       <section class="hero-banner">
@@ -33,7 +43,7 @@ session_start();
             frameborder="0"
             allow="autoplay; encrypted-media"
             allowfullscreen
-            aria-label="Banner video the Peak Performance Sport Club"
+            aria-label="Promotional video of Peak Performance Sports Club showing various activities."
           >
           </iframe>
         </div>
@@ -44,28 +54,28 @@ session_start();
         </div>
       </section>
 
-      <!-- Mansonry Block -->
+      <!-- Masonry Block -->
       <section class="masonry-section">
         <h1 class="masonry-title">Discover the club</h1>
         <div class="masonry-container">
           <!-- Left Column -->
           <div class="masonry-column">
-            <a href="tennis-article.php" class="masonry-item-link">
+            <a href="tennis-article.php" class="masonry-item-link" aria-label="Learn about Tennis at Peak Performance Sports Club">
               <div class="masonry-item large">
-                <img src="img/tennis.png" alt="Tennis" />
+                <img src="img/tennis.png" alt="Tennis activities at Peak Performance Sports Club" />
                 <div class="masonry-text">TENNIS</div>
               </div>
             </a>
             <div class="masonry-row">
-              <a href="contact-us.php" class="masonry-item-link">
+              <a href="contact-us.php" class="masonry-item-link" aria-label="Contact Peak Performance Sports Club">
                 <div class="masonry-item small">
-                  <img src="img/contact.png" alt="Office" />
+                  <img src="img/contact.png" alt="Contact us icon" />
                   <div class="masonry-text">CONTACT US</div>
                 </div>
               </a>
-              <a href="latest-events.php" class="masonry-item-link">
+              <a href="latest-events.php" class="masonry-item-link" aria-label="Check out the latest events at Peak Performance Sports Club">
                 <div class="masonry-item small">
-                  <img src="img/latest-events.png" alt="Gym" />
+                  <img src="img/latest-events.png" alt="Latest events icon" />
                   <div class="masonry-text">Our events</div>
                 </div>
               </a>
@@ -75,22 +85,22 @@ session_start();
           <!-- Right Column -->
           <div class="masonry-column">
             <div class="masonry-row">
-              <a href="membership.php" class="masonry-item-link">
+              <a href="membership.php" class="masonry-item-link" aria-label="Learn about memberships at Peak Performance Sports Club">
                 <div class="masonry-item small">
-                  <img src="img/membership.png" alt="Dinner" />
+                  <img src="img/membership.png" alt="Membership options at Peak Performance Sports Club" />
                   <div class="masonry-text">MEMBERSHIP</div>
                 </div>
               </a>
-              <a href="function-article.php" class="masonry-item-link">
+              <a href="function-article.php" class="masonry-item-link" aria-label="Discover functions and events at Peak Performance Sports Club">
                 <div class="masonry-item small">
-                  <img src="img/function.png" alt="Function" />
+                  <img src="img/function.png" alt="Function hall at Peak Performance Sports Club" />
                   <div class="masonry-text">FUNCTION</div>
                 </div>
               </a>
             </div>
-            <a href="lawn-bowl-article.php" class="masonry-item-link">
+            <a href="lawn-bowl-article.php" class="masonry-item-link" aria-label="Explore lawn bowl activities at Peak Performance Sports Club">
               <div class="masonry-item large">
-                <img src="img/lawnbowl.png" alt="Lawn Bowl" />
+                <img src="img/lawnbowl.png" alt="Lawn bowl activities at Peak Performance Sports Club" />
                 <div class="masonry-text">LAWN BOWL</div>
               </div>
             </a>
@@ -99,20 +109,19 @@ session_start();
       </section>
 
       <!-- Horizontal Scroll -->
-
       <section class="events-section">
         <div class="events-header">
           <h2 class="events-title">Our latest events</h2>
-          <div class="events-navigation">
-            <button class="arrow left-arrow">
-              <img src="img/left-arrow.png" alt="Left Arrow" />
+          <div class="events-navigation" aria-label="Event navigation arrows">
+            <button class="arrow left-arrow" aria-label="Previous events">
+              <img src="img/left-arrow.png" alt="Left arrow for previous events" />
             </button>
-            <button class="arrow right-arrow">
-              <img src="img/right-arrow.png" alt="Right Arrow" />
+            <button class="arrow right-arrow" aria-label="Next events">
+              <img src="img/right-arrow.png" alt="Right arrow for next events" />
             </button>
           </div>
         </div>
-        <div class="events-container">
+        <div class="events-container" aria-label="Latest events listings">
           <!-- Event tiles will be dynamically generated here -->
         </div>
       </section>
@@ -120,23 +129,22 @@ session_start();
       <!-- Subscribe Section -->
       <section class="subscribe-section">
         <div class="subscribe-title">
-          <h2>THE BEST tennis & lawn bowl club in NSW!</h2>
+          <h2>The best tennis & lawn bowl club in NSW!</h2>
         </div>
         <div class="subscribe-content-wrapper">
           <div class="subscribe-content">
             <p>
-              Sign up to the Peak Performance Sport Club newsletter to receive
-              exclusive updates about all our upcoming offers and functions.
+              Sign up to the Peak Performance Sports Club newsletter for exclusive updates on upcoming offers and events.
             </p>
           </div>
           <div class="subscribe-form-container">
-            <form action="db/subscribe_process.php" method="post" class="subscribe-form">
+            <form action="db/subscribe_process.php" method="post" class="subscribe-form" aria-label="Subscription form">
               <input
                 type="email"
                 name="email"
                 placeholder="Email"
                 required
-                aria-label="Email address"
+                aria-label="Enter your email address"
                 id="email"
               />
               <button type="submit" aria-label="Subscribe to the newsletter">
@@ -162,5 +170,5 @@ session_start();
       if (urlParams.get('subscribeSuccess') === 'TRUE') {
         document.getElementById('success-message').style.display = 'block';
       }
-</script>
+  </script>
 </html>

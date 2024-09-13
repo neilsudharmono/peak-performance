@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Membership| Peak Performance Sports Club</title>
-    <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
-    <link rel="stylesheet" href="css/header.css" />
+    <meta name="description" content="Join the Peak Performance Sports Club and gain access to premium tennis courts, lawn bowling greens, and exclusive events. Explore our membership options today!">
+    <meta name="keywords" content="Membership, Peak Performance Sports Club, Tennis Courts, Lawn Bowling, Events, Social Club, Premium Facilities">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Peak Performance Sports Club">
+    <meta name="theme-color" content="#084149">
+    <link rel="icon" type="image/x-icon" href="/peak-performance/img/favicon1.png" />
+    <link rel="stylesheet" href="css/header.css?v=1.0" />
     <link rel="stylesheet" href="css/footer.css" />
     <link rel="stylesheet" href="css/image-header-no-title.css" />
     <link rel="stylesheet" href="css/page-info.css" />
     <link rel="stylesheet" href="css/info-cta.css" />
     <link rel="stylesheet" href="css/faq.css" />
-  </head>
+    <title>Membership | Peak Performance Sports Club</title>
+</head>
   <body>
     <!-- Header -->
-    <?php include 'header.php'; ?>
+    <?php include "header.php"; ?>
 
     <main>
       <!-- Image Banner -->
@@ -200,7 +205,7 @@
       </section>
     </main>
 
-    <?php include 'footer.php'; ?>
+    <?php include "footer.php"; ?>
 
   </body>
   <script src="scripts/script.js"></script>

@@ -55,80 +55,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reset Password | Peak Performance Sports Club</title>
+    <meta name="description" content="Reset your password at Peak Performance Sports Club. Securely update your credentials and regain access to your account.">
+    <meta name="keywords" content="Password Reset, Peak Performance Sports Club, Account Recovery, Secure Login">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="author" content="Peak Performance Sports Club">
+    <meta name="theme-color" content="#084149">
+    <link rel="icon" type="image/x-icon" href="/peak-performance/img/favicon1.png" />
     <link rel="stylesheet" href="css/header.css" />
     <link rel="stylesheet" href="css/footer.css" />
     <link rel="stylesheet" href="css/login.css" />
-    <style>
-        header {
-            background-color: #084149;
-            padding: 10px 0;
-            font-size: 16px;
-            width: 100%;
-            position: fixed;
-            z-index: 1000;
-        }
-
-        .login-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 80vh;
-        }
-
-        .login-form {
-            width: 100%;
-            max-width: 400px;
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .login-form h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #084149;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #084149;
-            color: white;
-            font-size: 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0b5b62;
-        }
-
-        .error-message {
-            color: red;
-            font-size: 0.875em;
-        }
-    </style>
+    <link rel="stylesheet" href="css/forgot-password.css" />
+    <title>Reset Password | Peak Performance Sports Club</title>
 </head>
 <body>
     <!-- Header -->

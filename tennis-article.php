@@ -1,28 +1,33 @@
 <?php
-require('db/load_facilities.php'); // Include the file containing the function
-$facilities = loadFacilities($pdo, 'Tennis'); // Load Tennis facilities
-$today = date('Y-m-d', strtotime('+1 day')); // Calculate today + 1
-require('db/retrieve_user.php');
+require "db/load_facilities.php"; // Include the file containing the function
+$facilities = loadFacilities($pdo, "Tennis"); // Load Tennis facilities
+$today = date("Y-m-d", strtotime("+1 day")); // Calculate today + 1
+require "db/retrieve_user.php";
 ?>
 
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
+  <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tennis | Peak Performance Sports Club</title>
-    <link rel="icon" type="image/x-icon" href="/img/favicon.ico" />
-    <link rel="stylesheet" href="css/header.css" />
+    <meta name="description" content="Book your tennis court at Peak Performance Sports Club. Enjoy premium tennis facilities with five well-maintained courts, perfect for casual play, tournaments, and workshops.">
+    <meta name="keywords" content="Tennis, Peak Performance Sports Club, Tennis Courts, Book Tennis Court, Tennis Tournaments, Sports Club">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Peak Performance Sports Club">
+    <meta name="theme-color" content="#084149">
+    <link rel="icon" type="image/x-icon" href="/peak-performance/img/favicon1.png" />
+    <link rel="stylesheet" href="css/header.css?v=1.0" />
     <link rel="stylesheet" href="css/footer.css" />
     <link rel="stylesheet" href="css/image-header-no-title.css" />
     <link rel="stylesheet" href="css/page-info.css" />
     <link rel="stylesheet" href="css/faq.css" />
     <link rel="stylesheet" href="css/booking-form.css" />
+    <title>Tennis | Peak Performance Sports Club</title>
   </head>
   <body>
     <!-- Header -->
-    <?php include 'header.php'; ?>
+    <?php include "header.php"; ?>
 
     <main>
       <!-- Image Banner -->
@@ -165,7 +170,9 @@ require('db/retrieve_user.php');
             <label for="facility">Choose a Tennis Court:</label>
             <select name="facility" id="facility" onchange="fetchAvailableTimeSlots()">
                 <?php foreach ($facilities as $facility): ?>
-                    <option value="<?= $facility['FacilityID'] ?>"><?= $facility['FacilityName'] ?></option>
+                    <option value="<?= $facility[
+                        "FacilityID"
+                    ] ?>"><?= $facility["FacilityName"] ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -216,12 +223,18 @@ require('db/retrieve_user.php');
           </div>
           <button type="submit">Book Now</button>
 
-          <?php if (isset($_GET['bookingSuccess']) && $_GET['bookingSuccess'] == 'TRUE'): ?>
+          <?php if (
+              isset($_GET["bookingSuccess"]) &&
+              $_GET["bookingSuccess"] == "TRUE"
+          ): ?>
             <br>
             <div id="success-message" class="success-message">Your booking has been successfully submitted!</div>
         <?php endif; ?>
 
-        <?php if (isset($_GET['bookingSuccess']) && $_GET['bookingSuccess'] == 'FALSE'): ?>
+        <?php if (
+            isset($_GET["bookingSuccess"]) &&
+            $_GET["bookingSuccess"] == "FALSE"
+        ): ?>
             <br>
             <div id="success-message" class="success-message">Your booking has not been successful! Please try again</div>
         <?php endif; ?>
@@ -230,7 +243,7 @@ require('db/retrieve_user.php');
         </form>
       </section>
     </main>
-    <?php include 'footer.php'; ?>
+    <?php include "footer.php"; ?>
 
   </body>
   <script src="scripts/script.js"></script>
