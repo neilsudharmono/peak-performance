@@ -102,6 +102,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php include "footer.php"; ?>
 
     <!-- Scripts -->
-    <script src="scripts/validation.js"></script>
+    <script src="scripts/register.js"></script>
 </body>
 </html>

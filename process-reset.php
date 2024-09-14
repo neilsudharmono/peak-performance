@@ -32,23 +32,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $newPassword = htmlspecialchars(trim($_POST["new-password"]));
     $confirmPassword = htmlspecialchars(trim($_POST["confirm-password"]));
 
+    // Password validation: min 8 chars, 1 uppercase, 1 special character
     if ($newPassword === $confirmPassword) {
-        // Hash the new password
-        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+        if (
+            preg_match('/^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/', $newPassword)
+        ) {
+            // Hash the new password
+            $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
 
-        // Update password in the database using email from session
-        $email = $_SESSION["reset_email"];
-        $sql = "UPDATE Users SET PasswordHash = ? WHERE Email = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ss", $hashedPassword, $email);
+            // Update password in the database using email from session
+            $email = $_SESSION["reset_email"];
+            $sql = "UPDATE Users SET PasswordHash = ? WHERE Email = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ss", $hashedPassword, $email);
 
-        if ($stmt->execute()) {
-            echo "<script>alert('Password updated successfully!'); window.location.href = 'login.php';</script>";
+            if ($stmt->execute()) {
+                echo "<script>alert('Password updated successfully!'); window.location.href = 'login.php';</script>";
+            } else {
+                $passwordError = "Error updating password. Please try again.";
+            }
+
+            $stmt->close();
         } else {
-            $passwordError = "Error updating password. Please try again.";
+            $passwordError =
+                "Password must be at least 8 characters, contain at least one capital letter, and one special character.";
         }
-
-        $stmt->close();
     } else {
         $passwordError = "Passwords do not match.";
     }
@@ -97,5 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- Footer -->
     <?php include "footer.php"; ?>
+    <script src="scripts/login.js"></script>
+    <script src="scripts/register.js"></script>
 </body>
 </html>

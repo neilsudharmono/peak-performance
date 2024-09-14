@@ -186,5 +186,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
     </main>
 
     <?php include "footer.php"; ?>
+    <script src="scripts/register.js"></script>
 </body>
 </html>
