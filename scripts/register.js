@@ -68,3 +68,77 @@ document
       alert("Passwords do not match. Please try again.");
     }
   });
+
+document
+  .getElementById("update-user-form")
+  ?.addEventListener("submit", function (event) {
+    let isValid = true;
+
+    // Clear existing error messages
+    document
+      .querySelectorAll(".error-message")
+      .forEach((error) => (error.textContent = ""));
+
+    const firstName = document.getElementById("first-name").value.trim();
+    const lastName = document.getElementById("last-name").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const newPassword = document.getElementById("new-password").value.trim();
+    const confirmPassword = document
+      .getElementById("confirm-new-password")
+      .value.trim();
+    const currentPassword = document
+      .getElementById("current-password")
+      .value.trim();
+
+    // Name validation (ensure no special characters)
+    const namePattern = /^[a-zA-Z\s]+$/;
+
+    if (!namePattern.test(firstName)) {
+      document.getElementById("first-name-error").textContent =
+        "First name must contain only letters and spaces.";
+      isValid = false;
+    }
+
+    if (!namePattern.test(lastName)) {
+      document.getElementById("last-name-error").textContent =
+        "Last name must contain only letters and spaces.";
+      isValid = false;
+    }
+
+    // Phone number validation (must be exactly 10 digits)
+    const phonePattern = /^[0-9]{10}$/;
+
+    if (!phonePattern.test(phone)) {
+      document.getElementById("phone-error").textContent =
+        "Phone number must be a valid 10-digit number.";
+      isValid = false;
+    }
+
+    // Password validation (if changing password)
+    const passwordPattern = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9])(?=.{8,})/;
+
+    if (newPassword !== "" || confirmPassword !== "") {
+      if (!passwordPattern.test(newPassword)) {
+        document.getElementById("new-password-error").textContent =
+          "Password must be at least 8 characters, contain one uppercase letter, one number, and one special character.";
+        isValid = false;
+      }
+
+      if (newPassword !== confirmPassword) {
+        document.getElementById("confirm-new-password-error").textContent =
+          "Passwords do not match.";
+        isValid = false;
+      }
+
+      if (!currentPassword) {
+        document.getElementById("current-password-error").textContent =
+          "Please enter your current password to change the password.";
+        isValid = false;
+      }
+    }
+
+    // Prevent form submission if validation fails
+    if (!isValid) {
+      event.preventDefault();
+    }
+  });
