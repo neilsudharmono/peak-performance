@@ -28,7 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // Execute the query
         if ($stmt->execute()) {
-            echo "Your enquiry has been submitted successfully.";
+            echo "<script>alert('Your enquiry has been submitted successfully.');</script>";
+            header('Location: ../contact-us.php');
+
+            
         } else {
             echo "There was an error submitting your enquiry.";
         }

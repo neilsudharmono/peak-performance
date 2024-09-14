@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Update the event in the database
         try {
-            $stmt = $pdo->prepare("UPDATE events 
+            $stmt = $pdo->prepare("UPDATE Events 
                 SET EventName = :eventName, EventDate = :eventDate, StartTime = :startTime, EndTime = :endTime, 
                     Location = :location, CategoryID = :categoryID, Description = :description, ImageURL = :imageURL 
                 WHERE EventID = :eventID");

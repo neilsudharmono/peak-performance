@@ -31,5 +31,7 @@ document
 
     if (!isValid) {
       event.preventDefault();
+    } else {
+      window.location.href = "contact-us.php";
     }
   });

@@ -75,7 +75,7 @@ require "db/retrieve_user.php";
 
         <div class="faq-item">
           <div class="faq-question" aria-expanded="false" aria-controls="faq1">
-            How can I book a tennis court?
+            How can I book a Lawn Bowl field?
             <img
               src="img/down-arrow.png"
               class="faq-arrow"
@@ -161,10 +161,10 @@ require "db/retrieve_user.php";
       </section>
 
       <section class="booking-form">
-        <h2>Book our Tennis Court</h2>
+        <h2>Book our Lawn Bowl field</h2>
         <form action="db/booking_process.php" method="post" id="tennis-booking-form" novalidate>
         <div class="form-group">
-            <label for="facility">Choose a Tennis Court:</label>
+            <label for="facility">Choose a Lawn Bowl Field:</label>
             <select name="facility" id="facility" onchange="fetchAvailableTimeSlots()">
                 <?php foreach ($facilities as $facility): ?>
                     <option value="<?= $facility[
