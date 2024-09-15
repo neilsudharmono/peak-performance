@@ -1,0 +1,17 @@
+# Enable rewrite engine
+
+RewriteEngine On
+
+# Handle 404 Page Not Found Error
+
+ErrorDocument 404 /404.html
+
+# Handle 500 Internal Server Error
+
+ErrorDocument 500 /500.html
+
+# If you are using clean URLs (remove file extensions from URLs)
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
