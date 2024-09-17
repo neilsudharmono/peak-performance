@@ -8,15 +8,15 @@ if (!isset($_SESSION["reset_email"])) {
 }
 
 // Database connection settings
-$servername = "sql305.byetcluster.com";
-$dbname = "if0_37303582_peakperformance";
-$username = "if0_37303582";
-$password = "nJs0p7Jfvt2";
+// $servername = "sql305.byetcluster.com";
+// $dbname = "if0_37303582_peakperformance";
+// $username = "if0_37303582";
+// $password = "nJs0p7Jfvt2";
 
-// $servername = "localhost";
-// $username = "root";
-// $password = "root";
-// $dbname = "peakperformance";
+$servername = "localhost";
+$username = "root";
+$password = "root";
+$dbname = "peakperformance";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -40,8 +40,8 @@ $stmt->close();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $answer = htmlspecialchars(trim($_POST["answer"]));
 
-    // Compare the user input answer with the stored answer
-    if ($answer === $correctAnswer) {
+    // Compare the user input answer with the stored answer (case-insensitive)
+    if (strcasecmp($answer, $correctAnswer) === 0) {
         // Correct answer, redirect to password reset page
         header("Location: process-reset.php");
         exit();

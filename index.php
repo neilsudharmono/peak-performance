@@ -17,19 +17,6 @@ session_start();
     <meta name="keywords" content="Tennis, Lawn Bowl, Sports Club, Membership, Peak Performance, NSW, Sports, Events" />
     <meta name="author" content="Peak Performance Sports Club" />
 
-    <!-- Open Graph for Social Media -->
-    <meta property="og:title" content="Peak Performance Sports Club" />
-    <meta property="og:description" content="Join Peak Performance Sports Club and enjoy premium tennis and lawn bowl facilities in NSW, along with exclusive events and memberships." />
-    <meta property="og:image" content="https://example.com/img/hero-banner.png" />
-    <meta property="og:url" content="https://example.com" />
-    <meta property="og:type" content="website" />
-
-    <!-- Twitter Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Peak Performance Sports Club" />
-    <meta name="twitter:description" content="Explore the best tennis and lawn bowl facilities, and sign up for exclusive memberships and events at Peak Performance Sports Club." />
-    <meta name="twitter:image" content="https://example.com/img/hero-banner.png" />
-
     <title>Peak Performance Sports Club</title>
     <link rel="icon" type="image/x-icon" href="/peak-performance/img/favicon1.png" />
     <link rel="stylesheet" href="css/header.css?v=1.0" />

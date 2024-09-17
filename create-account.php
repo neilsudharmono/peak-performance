@@ -1,4 +1,8 @@
 <?php
+
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
+
 // DB connection setting
 $servername = "sql305.byetcluster.com";
 $dbname = "if0_37303582_peakperformance";
@@ -11,6 +15,14 @@ $password = "nJs0p7Jfvt2";
 // $dbname = "peakperformance";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
+$errors = [
+    "firstName" => "",
+    "lastName" => "",
+    "phone" => "",
+    "email" => "",
+    "password" => "",
+    "retypePassword" => "",
+];
 
 // Check connection
 if ($conn->connect_error) {
@@ -48,18 +60,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST["checkEmail"])) {
     $securityQuestion = htmlspecialchars(trim($_POST["security-question"]));
     $securityAnswer = htmlspecialchars(trim($_POST["security-answer"]));
 
+    // Validation for first name, last name, and phone number
+    if (empty($firstName) || !preg_match("/^[a-zA-Z\s]+$/", $firstName)) {
+        $errors["firstName"] =
+            "First name must contain only letters and spaces.";
+    }
+    if (empty($lastName) || !preg_match("/^[a-zA-Z\s]+$/", $lastName)) {
+        $errors["lastName"] = "Last name must contain only letters and spaces.";
+    }
+    if (empty($phone) || !preg_match("/^[0-9]{10}$/", $phone)) {
+        $errors["phone"] = "Phone number must be a valid 10-digit number.";
+    }
+    if (empty($email)) {
+        $errors["email"] = "Email is required.";
+    }
+
     // Password check
     if ($password !== $retypePassword) {
-        echo "<script>alert('Passwords do not match. Please try again.');</script>";
-    } else {
-        // HashedPassword
+        $errors["password"] = "Passwords do not match. Please try again.";
+    }
+
+    // If there are no errors, proceed with registration
+    if (
+        empty($errors["firstName"]) &&
+        empty($errors["lastName"]) &&
+        empty($errors["phone"]) &&
+        empty($errors["email"]) &&
+        empty($errors["password"])
+    ) {
+        // Hashed password
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        // SQL with updated SecurityQuestion and SecurityAnswer
+        // SQL query to insert new user
         $sql = "INSERT INTO Users (FirstName, LastName, Email, PhoneNumber, RoleID, PasswordHash, SecurityQuestion, SecurityAnswer)
             VALUES (?, ?, ?, ?, 1, ?, ?, ?)";
 
-        // SQL execute
         $stmt = $conn->prepare($sql);
         $stmt->bind_param(
             "sssssss",
@@ -73,22 +108,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST["checkEmail"])) {
         );
 
         if ($stmt->execute()) {
-            // if success, show alert and shift to login.php
-            echo "<script>
-              alert('Registration successful');
-              window.location.href='login.php';
-          </script>";
+            echo "<script>alert('Registration successful'); window.location.href='login.php';</script>";
         } else {
-            // if fail, show alert
-            echo "<script>alert('Registration not working. Please try again');</script>";
+            echo "<script>alert('Registration failed. Please try again.');</script>";
         }
 
-        // close connection
         $stmt->close();
+    } else {
+        // Print errors
+        foreach ($errors as $error) {
+            if (!empty($error)) {
+                echo "<script>alert('" . $error . "');</script>";
+            }
+        }
     }
     $conn->close();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -105,7 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST["checkEmail"])) {
     <link rel="stylesheet" href="css/footer.css" />
     <link rel="stylesheet" href="css/login.css" />
     <link rel="stylesheet" href="css/create-account.css" />
-
+    
     <style>
       header {
         background-color: #084149; 
@@ -162,7 +199,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST["checkEmail"])) {
                 <select id="security-question" name="security-question" required aria-required="true">
                     <option value="">Select a Security Question</option>
                     <option value="What is your pet name?">What is your pet's name?</option>
-                    <option value="What is your mother name?">What is your mother's maiden name?</option>
+                    <option value="What is your mother maiden name?">What is your mother's maiden name?</option>
                     <option value="What was the name of your first school?">What was the name of your first school?</option>
                     <option value="What is your favorite color?">What is your favorite color?</option>
                 </select>
@@ -180,7 +217,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST["checkEmail"])) {
     <?php include "footer.php"; ?>
 
     <script src="scripts/script.js"></script>
-    <script src="scripts/login.js"></script>
     <script src="scripts/register.js"></script>
+    <script src="scripts/login.js"></script>
+
 </body>
 </html>

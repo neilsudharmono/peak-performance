@@ -43,16 +43,27 @@ function validateForm(event, formType) {
     const phonePattern = /^[0-9]{10}$/;
     const retypePasswordField = document.getElementById("retype-password");
     const passwordPattern = /^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,})/;
+    const namePattern = /^[A-Za-z]+$/; // Only letters, no spaces, numbers, or special characters
 
-    // First name and last name validation
+    // First name validation
     if (!firstNameField.value) {
       document.getElementById("first-name-error").textContent =
         "Please enter your first name.";
       isValid = false;
+    } else if (!namePattern.test(firstNameField.value)) {
+      document.getElementById("first-name-error").textContent =
+        "First name cannot contain spaces, numbers, or special characters.";
+      isValid = false;
     }
+
+    // Last name validation
     if (!lastNameField.value) {
       document.getElementById("last-name-error").textContent =
         "Please enter your last name.";
+      isValid = false;
+    } else if (!namePattern.test(lastNameField.value)) {
+      document.getElementById("last-name-error").textContent =
+        "Last name cannot contain spaces, numbers, or special characters.";
       isValid = false;
     }
 
