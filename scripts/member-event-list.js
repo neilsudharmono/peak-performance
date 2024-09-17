@@ -90,9 +90,9 @@ document.addEventListener("DOMContentLoaded", function () {
             <a href="#" class="event-cta" data-event-id="${
               event.registrationID
             }">
-                ${
-                  userRegistered ? "Unregister from Event" : "Register to Event"
-                }
+                
+                 Unregister from Event
+                
             </a>
         </div>
       `;
