@@ -14,8 +14,6 @@ try {
 }
 
 /*
-
-
 $servername = 'localhost';  
 $dbname = 'peakperformance';  
 $username = 'root';  

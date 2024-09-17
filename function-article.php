@@ -153,10 +153,10 @@ require "db/retrieve_user.php";
       </section>
 
       <section class="booking-form">
-        <h2>Book our Tennis Court</h2>
+        <h2>Book for your function</h2>
         <form action="db/booking_process.php" method="post" id="tennis-booking-form" novalidate>
         <div class="form-group">
-            <label for="facility">Choose a Tennis Court:</label>
+            <label for="facility">Choose a function facility:</label>
             <select name="facility" id="facility" onchange="fetchAvailableTimeSlots()">
                 <?php foreach ($facilities as $facility): ?>
                     <option value="<?= $facility[

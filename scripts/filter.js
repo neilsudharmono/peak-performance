@@ -114,11 +114,13 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       });
 
+      // Wait for all promises to resolve before updating the DOM
       Promise.all(promises).then((eventTiles) => {
         eventTiles.forEach((eventTile) => {
           container.appendChild(eventTile);
         });
 
+        // Add event listeners after tiles are rendered
         document.querySelectorAll(".event-cta").forEach((button) => {
           button.addEventListener("click", function (e) {
             if (!isLoggedIn) {
@@ -294,10 +296,7 @@ function registerEvent(eventID) {
 }
 
 function checkUserRegistration(eventID) {
-  // URL to your PHP script that checks registration status
   const url = "db/check_event_registration.php";
-
-  // Return a promise to handle asynchronous operation
   return fetch(url, {
     method: "POST",
     headers: {
@@ -315,7 +314,7 @@ function checkUserRegistration(eventID) {
       }
     })
     .catch((error) => {
-      console.error("Error:", error);
+      console.error("Error checking registration status:", error); // Remove data.message
       return false;
     });
 }

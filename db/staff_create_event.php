@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Move the uploaded file to the target directory
     if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
-        echo "The file ". htmlspecialchars($imageFile) . " has been uploaded.";
+        //echo "The file ". htmlspecialchars($imageFile) . " has been uploaded.";
     } else {
         echo "Error uploading image.";
         exit();
@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
         // Insert event data into the database
-        $stmt = $pdo->prepare("INSERT INTO events (EventName, EventDate, StartTime, EndTime, Location, CategoryID, Description, EventStatus, ImageURL) 
+        $stmt = $pdo->prepare("INSERT INTO Events (EventName, EventDate, StartTime, EndTime, Location, CategoryID, Description, EventStatus, ImageURL) 
                                VALUES (:eventName, :eventDate, :startTime, :endTime, :location, :categoryID, :description, :eventStatus, :imageURL)");
         
         // Bind parameters
